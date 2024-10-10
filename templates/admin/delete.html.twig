@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}{% endblock %}
+{% block title %}Delete{% endblock %}
+
+{% block body %}
+    <div class="admin-form">
+        <h1>Delete User</h1>
+        <p>Opravdu si přejete odstranit {{ entity }} s ID: {{ data.id }}?</p>
+
+        <form method="post">
+            <button class="btn btn-danger" type="submit">Delete</button>
+            <a href="{{ path('app_admin') }}" class="btn btn-secondary cancelButton">Cancel</a>
+        </form>
+    </div>
+{% endblock %}
+
+{% block topBtn %}
+{% endblock %}

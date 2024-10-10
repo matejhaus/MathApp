@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vaše statistiky{% endblock %}
+
+{% block body %}
+    {% if not app.user %}
+        Statistiky jsou dostupné pouze pro přihlášené uživatele
+    {% elseif statistics is empty %}
+        <p>Nemáte žádné statistiky.</p>
+    {% else %}
+        <div class="stats-wrapper">
+            {% for stat in statistics %}
+                <div class="stats">
+                    <div class="title-wrapper">
+                        <p class="title">{{ stat.theme.name }}<img src="{{ asset('assets/icons/down-arrow.svg') }}"
+                                                                   alt=""></p>
+                        <p>Level: {{ stat.userLevel }}</p>
+                    </div>
+                    <div class="content">
+                        <div class="item">
+                            <div>
+                                <p>Počet pokusů: {{ stat.totalAttempts }}</p>
+                                <p>Procentuální úspěšnost: {{ stat.rate }}%</p>
+                                <p class="green">Správné odpovědi: {{ stat.correctAnswers }}</p>
+                                <p class="red">Nesprávné odpovědi: {{ stat.incorrectAnswers }}</p>
+                            </div>
+                            <div>
+                                <p>Počet odpovědí: {{ stat.totalAnswers }}</p>
+                                <p>Chybovost: {{ stat.errorRate }}%</p>
+                                <p>Poměr správných odpovědí: {{ stat.correctToIncorrectRatio }}%</p>
+                            </div>
+                            {% if stat.attempts %}
+                                <div class="attempts">
+                                    <p class="title">Posledních 5 pokusů</p>
+                                    {% for attempt in stat.attempts %}
+                                        <div class="attempt"><p class="green">{{ attempt.correctAnswers }}</p>
+                                            | <p class="red">{{ attempt.incorrectAnswers }}</p>
+                                        </div>
+                                    {% endfor %}
+                                    {% if stat.attempts|length > 1 %}
+                                        <p>Zlepšení: {{ stat.improvement|number_format(2) }} %</p>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

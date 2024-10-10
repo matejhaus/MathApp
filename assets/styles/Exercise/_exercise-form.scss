@@ -1,0 +1,43 @@
+.exercise-form {
+  margin-top: 40px;
+  max-width: 500px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-left: auto;
+  margin-right: auto;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    label {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #333;
+    }
+
+    input[type="number"],
+    select,
+    input[type="text"] {
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      transition: border-color 0.3s;
+
+      &:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+
+      &[disabled] {
+        background-color: #e9ecef;
+        color: #6c757d;
+      }
+    }
+  }
+}

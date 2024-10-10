@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}{% endblock %}
+{% block title %}Add{% endblock %}
+
+{% block body %}
+    <div class="admin-form">
+        <h1>Přidat Nový</h1>
+        <form action="{{ path('add_' ~ entity) }}" method="post">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn add-new">Přidat</button>
+            {{ form_end(form) }}
+        </form>
+    </div>
+    <script>
+        window.addEventListener('beforeunload', function () {
+            if (!this.opener) {
+                return;
+            }
+
+            this.opener.location.reload();
+        });
+    </script>
+{% endblock %}
+
+{% block topBtn %}
+{% endblock %}

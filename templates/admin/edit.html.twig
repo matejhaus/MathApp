@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}{% endblock %}
+{% block title %}Edit{% endblock %}
+
+{% block body %}
+    <div class="admin-form">
+        <h1>Upravit</h1>
+        <form action="{{ path('edit_' ~ entity, {'id': data.id}) }}" method="post" target="_blank">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn edit">Uložit změny</button>
+            {{ form_end(form) }}
+        </form>
+    </div>
+{% endblock %}
+
+{% block topBtn %}
+{% endblock %}

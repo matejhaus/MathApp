@@ -1,0 +1,33 @@
+<div class="topbar">
+    <div class="burger" id="burger-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    {% block nav %}
+        <div id="nav-menu">
+            <div class="menu">
+                <ul>
+                    <li><a href="/">Domů</a></li>
+                    <li><a href="{{ path('app_statistics') }}">Statistiky</a></li>
+                    <li><a href="">Témata</a></li>
+                </ul>
+            </div>
+            <div class="nav-btns-wrapper">
+                {% if not app.user %}
+                    <a href="/register" class="btn-link">Registrace</a>
+                    <a href="/login" class="btn-primary">Přihlásit se</a>
+                {% else %}
+                    <p class="logged-user">
+                        <img src="{{ asset('assets/icons/user.svg') }}" alt="">
+                        {{ app.user.firstName ~' '~ app.user.lastName }}
+                    </p>
+                    <a href="/logout" class="btn-primary">Odhlásit se</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="/admin" class="btn-primary">Administrace</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    {% endblock %}
+</div>

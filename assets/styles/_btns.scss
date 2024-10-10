@@ -1,0 +1,70 @@
+@import "_variables.scss";
+
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 15px;
+  background-color: $color-secondary;
+  border: none;
+  max-width: 250px;
+  color: black;
+  border-radius: 15px;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.5s ease;
+
+  &:hover {
+    color: white;
+    background-color: $color-one;
+  }
+}
+
+.btn-secondary {
+  padding: 10px 15px;
+  background-color: $color-secondary;
+  border: none;
+  max-width: 250px;
+  color: white;
+  border-radius: 15px;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.5s ease;
+
+  &:hover {
+    color: white;
+    background-color: $color-one;
+  }
+}
+
+.btn-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $color-secondary;
+  border: none;
+  width: 100%;
+  color: black;
+  border-radius: 15px;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.5s ease;
+  padding: 30px 40px;
+  min-width: 100px;
+
+  &:hover {
+    color: white;
+    background-color: $color-one;
+  }
+}
+
+.btn-link {
+  padding: 10px 15px;
+  border: none;
+  color: white;
+  text-decoration: none;
+
+  &:hover {
+    color: gray;
+  }
+}

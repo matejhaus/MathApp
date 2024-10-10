@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="test_header">
+        <h1>{{ title }}</h1>
+    </div>
+    <div class="test-form">
+        <form action="{{ path('test_show', { 'id': theme.id }) }}" method="post">
+            <div class="examples">
+                {% for example in examples %}
+                    <div class="example">
+                        <span class="example-number">{{ loop.index }}.</span>
+                        <p>{{ example.question }}</p>
+                        <input type="text" name="answers[{{ loop.index0 }}]" placeholder="Výsledek"
+                               value="{{ user_answers[loop.index0] ?? '' }}">
+                        {% if results|length > 0 %}
+                            <span>{{ results[loop.index0].is_correct ? 'Správně' : 'Chybně'  }}</span>
+                            {% if results[loop.index0].is_correct == false%}
+                                Správná odpověď: {{ results[loop.index0].correct_answer }}
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                {% if results|length > 0 %}
+                    <a class="btn-secondary" href="{{ path('theme_show', { 'id': theme.id }) }}">Ukončit test</a>
+                {% else %}
+                    <button class="btn-secondary" type="submit">Odeslat odpovědi</button>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+{% endblock %}

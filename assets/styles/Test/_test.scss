@@ -1,0 +1,22 @@
+@import "../_btns.scss";
+.test_header {
+  display: flex;
+  justify-content: center;
+  padding: 50px 50px;
+}
+.examples {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+  align-items: center;
+}
+.example {
+  display: flex;
+  gap: 20px;
+  border-radius: 15px;
+  align-items: center;
+  border: 1px solid black;
+  padding: 5px;
+  width: 100%;
+}

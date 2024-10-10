@@ -1,0 +1,26 @@
+{
+    "devDependencies": {
+        "@babel/core": "^7.17.0",
+        "@babel/preset-env": "^7.16.0",
+        "@symfony/webpack-encore": "^4.6.1",
+        "regenerator-runtime": "^0.13.9",
+        "sass": "^1.77.6",
+        "sass-loader": "^14.2.1",
+        "webpack": "^5.74.0",
+        "webpack-cli": "^4.10.0"
+    },
+    "license": "UNLICENSED",
+    "private": true,
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress"
+    },
+    "packageManager": "pnpm@9.5.0+sha512.140036830124618d624a2187b50d04289d5a087f326c9edfc0ccd733d76c4f52c3a313d4fc148794a2a9d81553016004e6742e8cf850670268a7387fc220c903",
+    "dependencies": {
+        "bootstrap": "^5.3.3",
+        "core-js": "^3.38.1",
+        "jquery": "^3.7.1"
+    }
+}

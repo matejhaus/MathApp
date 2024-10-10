@@ -1,0 +1,63 @@
+@import "_variables.scss";
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fffbf7;
+}
+
+.container {
+  max-width: 1440px;
+  margin: auto;
+  padding: 0 20px;
+
+  @media (max-width: 1200px) {
+    max-width: 1000px;
+  }
+
+  @media (max-width: 992px) {
+    max-width: 800px;
+  }
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    padding: 0 10px;
+  }
+}
+
+
+.header {
+  height: 150px;
+  background-color: #28282B;
+  border-bottom: 1px solid white;
+}
+
+#toTopBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 25px 25px;
+  background-color: $color-secondary;
+  border: none;
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: border 0.5s ease-in;
+
+  img {
+    transition: transform 0.5s ease;
+    max-height: 40px;
+  }
+}
+
+#toTopBtn:hover {
+  background-color: $color-two;
+  border: 1px solid black;
+
+  img {
+    transform: rotate(360deg);
+  }
+}
+
+

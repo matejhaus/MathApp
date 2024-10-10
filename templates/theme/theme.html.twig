@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ theme.name }}{% endblock %}
+
+{% block header %}
+    {{ parent() }}
+{% endblock %}
+{% block banner %}
+    <div class="theme_header">
+        <h1>{{ theme.name }}</h1>
+        <p>{{ theme.description }}</p>
+    </div>
+{% endblock %}
+{% block body %}
+    <div class="test">
+        <a class="btn-primary" href="/"><img class="icon" src="{{ asset('assets/icons/back.svg') }}">Zpět</a>
+        <a class="btn-primary" href="{{ path('app_exercise', { 'id': theme.id }) }}"><img class="icon" src="{{ asset('assets/icons/practise.svg') }}">Procvičování</a>
+        <a class="btn-primary" href="{{ path('test_show', { 'id': theme.id }) }}"><img class="icon" src="{{ asset('assets/icons/exam.svg') }}">Test</a>
+    </div>
+    <div class="theme-content">{{ theme.content|raw }}</div>
+{% endblock %}

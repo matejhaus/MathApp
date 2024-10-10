@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EasyMath{% endblock %}
+{% block banner %}{% include 'Components/HeaderSlider.html.twig' with {'quotes': quotes} %}{% endblock %}
+{% block body %}
+    <div class="home-banners">
+        <div class="profile-banner">
+            <div class="text-wrapper">
+                <p class="title">Profil</p>
+                <a href="{{ app.user ? path('app_logout') : path('app_login') }}"
+                   class="btn-primary">{% if app.user %}Odhlásit se{% else %}Přihlásit se{% endif %}</a>
+            </div>
+            <div class="image">
+                <img src="{{ asset('assets/icons/user.svg') }}" alt="stats">
+            </div>
+        </div>
+
+        <div class="stats-banner">
+            <div class="image">
+                <img src="{{ asset('assets/icons/stats.svg') }}" alt="stats">
+            </div>
+            <div class="text-wrapper">
+                <p class="title">Statistiky</p>
+                <a href="{{ path('app_statistics') }}"
+                   class="btn-primary">{% if app.user %}Pokračovat{% else %}Přihlásit se{% endif %}</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="home_themes">
+        {% for theme in themes %}
+            <div class="home_theme">
+                <div class="image">
+                    {% set iconPath = 'assets/icons/theme-' ~ theme.id ~ '.svg' %}
+                    <img class="icon" src="{{ asset(iconPath) }}" alt="{{ theme.name }}">
+                </div>
+                <div>
+                    <p class="name">{{ theme.name }}</p>
+                    <a href="{{ path('theme_show', { 'id': theme.id }) }}" class="btn-primary">Pokračovat</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
