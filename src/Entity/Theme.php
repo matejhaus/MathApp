@@ -151,7 +151,6 @@ class Theme
     public function removeExample(Example $example): static
     {
         if ($this->examples->removeElement($example)) {
-            // set the owning side to null (unless already changed)
             if ($example->getTheme() === $this) {
                 $example->setTheme(null);
             }
@@ -181,7 +180,6 @@ class Theme
     public function removeUserStatistic(UserStatistics $userStatistic): static
     {
         if ($this->userStatistics->removeElement($userStatistic)) {
-            // set the owning side to null (unless already changed)
             if ($userStatistic->getTheme() === $this) {
                 $userStatistic->setTheme(null);
             }
@@ -211,7 +209,6 @@ class Theme
     public function removeUserAttempt(UserAttempts $userAttempt): static
     {
         if ($this->userAttempts->removeElement($userAttempt)) {
-            // set the owning side to null (unless already changed)
             if ($userAttempt->getTheme() === $this) {
                 $userAttempt->setTheme(null);
             }

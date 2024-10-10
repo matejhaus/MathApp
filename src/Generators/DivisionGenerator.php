@@ -11,24 +11,20 @@ class DivisionGenerator extends AbstractGenerator
         $examples = [];
 
         for ($i = 0; $i < $numberOfExamples; $i++) {
-            // Pro každou iteraci generujeme příklad na dělení
             switch ($difficulty) {
                 case 'easy':
-                    // Jednoduché dělení s celými čísly
                     $divisor = rand($minValue, $maxValue);
                     $result = rand($minValue, $maxValue);
                     $dividend = $divisor * $result;
                     break;
 
                 case 'medium':
-                    // Dělení s celými čísly a případně zlomky
                     $divisor = rand($minValue, $maxValue);
                     $result = rand($minValue, $maxValue);
-                    $dividend = $divisor * $result + rand(0, $divisor - 1); // Možný zbytek
+                    $dividend = $divisor * $result + rand(0, $divisor - 1);
                     break;
 
                 case 'hard':
-                    // Dělení se zápornými čísly a zlomky
                     $divisor = rand($minValue, $maxValue) * (rand(0, 1) ? 1 : -1);
                     $result = rand($minValue, $maxValue) * (rand(0, 1) ? 1 : -1);
                     $dividend = $divisor * $result + rand(0, abs($divisor) - 1);
@@ -40,11 +36,10 @@ class DivisionGenerator extends AbstractGenerator
 
             $equation = "{$dividend} ÷ {$divisor}";
 
-            // Výsledek řešení
-            $correctResult = intdiv($dividend, $divisor); // Celá část dělení
-            $remainder = $dividend % $divisor; // Zbytek dělení
+            $correctResult = intdiv($dividend, $divisor);
+            $remainder = $dividend % $divisor;
 
-            // Kroky k řešení
+
             $steps = [];
             $steps[] = "Máme příklad: {$dividend} ÷ {$divisor}";
             $steps[] = "Zjistíme, kolikrát se {$divisor} vejde do {$dividend}.";
@@ -68,6 +63,6 @@ class DivisionGenerator extends AbstractGenerator
 
     public function verify($input, $correctResult): bool
     {
-        return abs($input - $correctResult) < 0.01; // kontrola s přesností na dvě desetinná místa
+        return abs($input - $correctResult) < 0.01;
     }
 }

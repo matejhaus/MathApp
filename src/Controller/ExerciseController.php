@@ -53,13 +53,10 @@ class ExerciseController extends AbstractController
         $numberOfExamples = $request->query->getInt('number_of_examples', 1);
         $difficulty = $request->query->get('difficulty', 'easy');
 
-        // Vytvoření instance generátoru na základě tématu
         $this->generator = $this->createGenerator($theme);
 
-        // Vygenerování příkladů na základě zadaných parametrů
         $examples = $this->generator->generate($minValue, $maxValue, $numberOfExamples, $difficulty);
 
-        // Zobrazení výsledků v šabloně
         return $this->render('exercise/exercise.html.twig', [
             'examples' => $examples,
             'theme' => $theme,
@@ -86,15 +83,12 @@ class ExerciseController extends AbstractController
             return $this->json(['error' => 'Není vybrané téma'], 400);
         }
 
-        // Inicializace generátoru pouze jednou pro dané téma
         if ($this->generator === null) {
             $this->generator = $this->createGenerator($theme);
         }
 
-        // Použití existujícího generátoru
         $solutionData = $this->generator->solveEquation($equation, $difficulty);
 
-        // Vrátí JSON odpověď s výsledkem a kroky
         return $this->json($solutionData);
     }
 }

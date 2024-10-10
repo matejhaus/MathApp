@@ -11,10 +11,8 @@ class EquationGenerator extends AbstractGenerator
         $examples = [];
 
         for ($i = 0; $i < $numberOfExamples; $i++) {
-            // Pro každou iteraci generujeme nový příklad
             switch ($difficulty) {
                 case 'easy':
-                    // Rovnice ve formátu ax + b = c
                     $a = rand($minValue, $maxValue);
                     $b = rand($minValue, $maxValue);
                     $x = rand($minValue, $maxValue);
@@ -23,7 +21,6 @@ class EquationGenerator extends AbstractGenerator
                     break;
 
                 case 'medium':
-                    // Rovnice ve formátu a*(y + bx) = c
                     $a = rand($minValue, $maxValue);
                     $b = rand($minValue, $maxValue);
                     $x = rand($minValue, $maxValue);
@@ -33,7 +30,6 @@ class EquationGenerator extends AbstractGenerator
                     break;
 
                 case 'hard':
-                    // Rovnice ve formátu a*x + b*(c + dx) = e
                     $a = rand($minValue, $maxValue);
                     $b = rand($minValue, $maxValue);
                     $c = rand($minValue, $maxValue);
@@ -47,7 +43,6 @@ class EquationGenerator extends AbstractGenerator
                     throw new \InvalidArgumentException("Neplatná náročnost: {$difficulty}");
             }
 
-            // Ukládáme každý příklad do pole s kroky a řešením
             $examples[] = [
                 'equation' => $equation,
             ];
@@ -62,7 +57,6 @@ class EquationGenerator extends AbstractGenerator
 
         switch ($difficulty) {
             case 'easy':
-                // Rovnice ve formátu "ax + b = c"
                 [$leftSide, $rightSide] = explode('=', $equation);
                 $rightSide = trim($rightSide);
 
@@ -82,7 +76,6 @@ class EquationGenerator extends AbstractGenerator
                 break;
 
             case 'medium':
-                // Rovnice ve formátu "a*(y + bx) = c"
                 [$leftSide, $rightSide] = explode('=', $equation);
                 $rightSide = trim($rightSide);
 
@@ -104,7 +97,6 @@ class EquationGenerator extends AbstractGenerator
                 break;
 
             case 'hard':
-                // Rovnice ve formátu "a*x + b*(c + dx) = e"
                 [$leftSide, $rightSide] = explode('=', $equation);
                 $rightSide = trim($rightSide);
 
@@ -119,7 +111,6 @@ class EquationGenerator extends AbstractGenerator
                 $d = (int) str_replace(' ', '', $matches[4]);
                 $e = (int) $rightSide;
 
-                // Kroky řešení pro 'hard'
                 $steps[] = "Rovnice: {$a}x + {$b}*({$c} + {$d}x) = {$e}";
                 $steps[] = "Roznásobíme závorku: {$a}x + {$b}*{$c} + {$b}*{$d}x = {$e}";
                 $steps[] = "Spojíme koeficienty u 'x': (" . ($a + $b * $d) . ")x + " . ($b * $c) . " = {$e}";
@@ -143,7 +134,7 @@ class EquationGenerator extends AbstractGenerator
 
     public function verify($input, $correctResult): bool
     {
-        return abs($input - $correctResult) < 0.01; // kontrola s přesností na dvě desetinná místa
+        return abs($input - $correctResult) < 0.01;
     }
 }
 

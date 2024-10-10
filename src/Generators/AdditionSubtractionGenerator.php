@@ -11,21 +11,18 @@ class AdditionSubtractionGenerator extends AbstractGenerator
         $examples = [];
 
         for ($i = 0; $i < $numberOfExamples; $i++) {
-            // Náhodně zvolíme počet čísel, které budeme sčítat nebo odčítat
-            $numberCount = rand(2, 5);  // Počet čísel mezi 2 a 5
+            $numberCount = rand(2, 5);
 
             $numbers = [];
             for ($j = 0; $j < $numberCount; $j++) {
                 $numbers[] = rand($minValue, $maxValue) * ($difficulty === 'hard' && rand(0, 1) ? -1 : 1);
             }
 
-            // Náhodně zvolíme, zda budou operace sčítání nebo odčítání
             $operations = [];
             for ($j = 0; $j < $numberCount - 1; $j++) {
                 $operations[] = rand(0, 1) ? '+' : '-';
             }
 
-            // Vytvoříme výraz a vypočítáme výsledek
             $expression = $this->createExpression($numbers, $operations);
             $result = $this->calculateResult($numbers, $operations);
             $steps = $this->generateSteps($numbers, $operations);
@@ -86,7 +83,7 @@ class AdditionSubtractionGenerator extends AbstractGenerator
 
     public function verify($input, $correctResult): bool
     {
-        return abs($input - $correctResult) < 0.01; // kontrola s přesností na dvě desetinná místa
+        return abs($input - $correctResult) < 0.01;
     }
 }
 
