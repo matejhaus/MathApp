@@ -5,6 +5,7 @@ $(document).ready(function () {
         const equation = button.data('equation');
         const difficulty = button.data('difficulty');
         const theme = button.data('theme');
+        // console.log(button+"\n"+answerInput+"\n"+equation+"\n"+difficulty+"\n"+theme);
 
         $.ajax({
             type: 'POST',

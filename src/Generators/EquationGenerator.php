@@ -51,7 +51,7 @@ class EquationGenerator extends AbstractGenerator
         return $examples;
     }
 
-    public function solveEquation(string $equation, string $difficulty): array
+    public function solve(string $equation, string $difficulty): array
     {
         $steps = [];
 

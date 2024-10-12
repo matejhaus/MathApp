@@ -37,6 +37,26 @@ class AdditionSubtractionGenerator extends AbstractGenerator
         return $examples;
     }
 
+    public function solve(string $equation, string $difficulty): array
+    {
+        $parsedData = $this->parseEquation($equation);
+        $numbers = $parsedData['numbers'];
+        $operations = $parsedData['operations'];
+
+        $result = $this->calculateResult($numbers, $operations);
+        $steps = $this->generateSteps($numbers, $operations);
+
+        return [
+            'solution' => $result,
+            'steps' => $steps
+        ];
+    }
+
+    public function verify($input, $correctResult): bool
+    {
+        return abs($input - $correctResult) < 0.01;
+    }
+
     private function createExpression(array $numbers, array $operations): string
     {
         $expression = (string) $numbers[0];
@@ -81,12 +101,14 @@ class AdditionSubtractionGenerator extends AbstractGenerator
         return $steps;
     }
 
-    public function verify($input, $correctResult): bool
+    private function parseEquation(string $equation): array
     {
-        return abs($input - $correctResult) < 0.01;
+        preg_match_all('/-?\d+/', $equation, $numbers);
+        preg_match_all('/[+-]/', $equation, $operations);
+
+        return [
+            'numbers' => array_map('intval', $numbers[0]),
+            'operations' => $operations[0]
+        ];
     }
 }
-
-
-
-

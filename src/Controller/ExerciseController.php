@@ -87,7 +87,7 @@ class ExerciseController extends AbstractController
             $this->generator = $this->createGenerator($theme);
         }
 
-        $solutionData = $this->generator->solveEquation($equation, $difficulty);
+        $solutionData = $this->generator->solve($equation, $difficulty);
 
         return $this->json($solutionData);
     }
