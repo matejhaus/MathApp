@@ -14,7 +14,7 @@ class MainController extends AbstractController
     public function index(ThemeRepository $themeRepository, QuotesRepository $quotesRepository): Response
     {
         $themes = $themeRepository->findAllThemes();
-        $quotes = $quotesRepository->findBy([], ['position' => 'DESC']);
+        $quotes = $quotesRepository->findBy([], ['position' => 'ASC']);
 
         return $this->render('main/index.html.twig', [
             'quotes' => $quotes,
