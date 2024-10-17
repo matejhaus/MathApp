@@ -7,6 +7,9 @@ use App\Generators\DivisionGenerator;
 use App\Generators\EquationGenerator;
 use App\Generators\InequalityGenerator;
 use App\Generators\MultiplicationGenerator;
+use App\Generators\PerimeterGenerator;
+use App\Generators\TimeProblemGenerator;
+use App\Generators\WordProblemGenerator;
 use App\Repository\ThemeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -31,6 +34,12 @@ class ExerciseController extends AbstractController
                 return new MultiplicationGenerator();
             case 'Nerovnice':
                 return new InequalityGenerator();
+            case 'Obvod':
+                return new PerimeterGenerator();
+            case 'Slovní úlohy':
+                return new WordProblemGenerator();
+            case 'Čas':
+                return new TimeProblemGenerator();
             default:
                 throw new \InvalidArgumentException('Neznámé téma');
         }

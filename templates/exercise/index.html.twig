@@ -16,9 +16,16 @@
 
             <label for="difficulty">Náročnost:</label>
             <select id="difficulty" name="difficulty">
-                <option value="easy">Jednoduchá</option>
-                <option value="medium">Střední</option>
-                <option value="hard">Těžká</option>
+                {% if theme.id == 10 %}
+                    <option value="square">Čtverec</option>
+                    <option value="rectangle">Obdelník</option>
+                    <option value="triangle">Trojúhelník</option>
+                    <option value="circle">kruh</option>
+                {% else %}
+                    <option value="easy">Jednoduchá</option>
+                    <option value="medium">Střední</option>
+                    <option value="hard">Těžká</option>
+                {% endif %}
             </select>
 
             <label for="theme">Téma</label>
