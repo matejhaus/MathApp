@@ -30,7 +30,7 @@ class AdditionSubtractionGenerator extends AbstractGenerator
             $examples[] = [
                 'equation' => $expression,
                 'correctResult' => $result,
-                'steps' => $steps
+                'steps' => $steps,
             ];
         }
 

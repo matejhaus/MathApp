@@ -54,7 +54,8 @@ class InequalityGenerator extends AbstractGenerator
                 'equation' => $equation,
                 'correctResult' => $correctResult,
                 'inequalitySign' => $inequalitySign,
-                'steps' => $steps
+                'steps' => $steps,
+                'format' => ''
             ];
         }
 

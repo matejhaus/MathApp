@@ -45,6 +45,7 @@ class EquationGenerator extends AbstractGenerator
 
             $examples[] = [
                 'equation' => $equation,
+                'format' => ''
             ];
         }
 

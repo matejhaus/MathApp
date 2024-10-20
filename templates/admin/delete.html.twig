@@ -13,6 +13,15 @@
             <a href="{{ path('app_admin') }}" class="btn btn-secondary cancelButton">Cancel</a>
         </form>
     </div>
+    <script>
+        window.addEventListener('beforeunload', function () {
+            if (!this.opener) {
+                return;
+            }
+
+            this.opener.location.reload();
+        });
+    </script>
 {% endblock %}
 
 {% block topBtn %}

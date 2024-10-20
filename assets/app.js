@@ -14,6 +14,7 @@ import './styles/Admin/Entity/_entity.scss';
 import './styles/Admin/_forms.scss';
 import './styles/Exercise/_exercise.scss'
 import './styles/Exercise/_exercise-form.scss'
+import './styles/Footer/_footer.scss'
 import 'bootstrap';
 import jquery from 'jquery';
 

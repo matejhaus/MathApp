@@ -10,6 +10,7 @@
 
 {% block body %}
     <div class="exercise">
+        {% set format = '' %}
         {% for example in examples %}
             {% if example.format %}
                 {% set format = example.format %}

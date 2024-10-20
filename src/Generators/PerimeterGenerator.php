@@ -41,6 +41,7 @@ class PerimeterGenerator extends AbstractGenerator
 
             $examples[] = [
                 'equation' => $equation,
+                'format' => ''
             ];
         }
 

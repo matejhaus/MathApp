@@ -40,6 +40,7 @@ class DivisionGenerator extends AbstractGenerator
 
             $examples[] = [
                 'equation' => $equation,
+                'format' => ''
             ];
         }
 

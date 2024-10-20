@@ -43,6 +43,7 @@ class MultiplicationGenerator extends AbstractGenerator
             $examples[] = [
                 'equation' => $equation,
                 'correctResult' => $product,
+                'format' => ''
             ];
         }
 

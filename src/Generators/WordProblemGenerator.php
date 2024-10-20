@@ -63,6 +63,7 @@ class WordProblemGenerator extends AbstractGenerator
 
             $examples[] = [
                 'equation' => $equation,
+                'format' => ''
             ];
         }
 
