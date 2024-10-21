@@ -12,24 +12,25 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class StatisticsController extends AbstractController
 {
     #[Route('/statistics', name: 'app_statistics')]
-    public function index(UserStatisticsRepository $userStatisticsRepository,UserAttemptsRepository $userAttemptsRepository, UserInterface $user): Response
+    public function index(UserStatisticsRepository $userStatisticsRepository, UserAttemptsRepository $userAttemptsRepository, UserInterface $user): Response
     {
         $userStatistics = $userStatisticsRepository->findBy(['user' => $user]);
-        $userAttempts =  $userAttemptsRepository->findBy(['user' => $user]);
+        $userAttempts = $userAttemptsRepository->findBy(['user' => $user]);
         $statisticsWithAttempts = [];
-        foreach ($userStatistics as $index => $statistic){
-            $theme=$statistic->getTheme();
-            $attemptsForTheme = array_filter($userAttempts, function ($attempt) use ($theme){
+
+        foreach ($userStatistics as $index => $statistic) {
+            $theme = $statistic->getTheme();
+            $attemptsForTheme = array_filter($userAttempts, function ($attempt) use ($theme) {
                 return $attempt->getTheme() === $theme;
             });
 
-            $correctAnswers=$statistic->getCorrectAnswers();
-            $totalAnswers=$statistic->getIncorrectAnswers()+$correctAnswers;
-            $statistic->rate = $totalAnswers > 0 ? ($correctAnswers / $totalAnswers) * 100 : 0;
+            $correctAnswers = $statistic->getCorrectAnswers();
+            $totalAnswers = $statistic->getIncorrectAnswers() + $correctAnswers;
+            $statistic->rate = $totalAnswers > 0 ? round(($correctAnswers / $totalAnswers) * 100, 2) : 0;
 
-            $statistic->errorRate=($statistic->getIncorrectAnswers()/$totalAnswers)*100;
+            $statistic->errorRate = $totalAnswers > 0 ? round(($statistic->getIncorrectAnswers() / $totalAnswers) * 100, 2) : 0;
             $statistic->correctToIncorrectRatio = round(($correctAnswers / ($statistic->getIncorrectAnswers() > 0 ? $statistic->getIncorrectAnswers() : 1)) * 100, 2);
-            $statistic->totalAnswers=$totalAnswers;
+            $statistic->totalAnswers = $totalAnswers;
             $statistic->attempts = $attemptsForTheme;
 
             if (count($attemptsForTheme) > 1) {
@@ -38,13 +39,13 @@ class StatisticsController extends AbstractController
 
                 $lastCorrectAnswers = $lastAttempt->getCorrectAnswers();
                 $lastTotalAnswers = $lastAttempt->getCorrectAnswers() + $lastAttempt->getIncorrectAnswers();
-                $lastScore = $lastTotalAnswers > 0 ? ($lastCorrectAnswers / $lastTotalAnswers) * 100 : 0;
+                $lastScore = $lastTotalAnswers > 0 ? round(($lastCorrectAnswers / $lastTotalAnswers) * 100, 2) : 0;
 
                 $secondLastCorrectAnswers = $secondLastAttempt->getCorrectAnswers();
                 $secondLastTotalAnswers = $secondLastAttempt->getCorrectAnswers() + $secondLastAttempt->getIncorrectAnswers();
-                $secondLastScore = $secondLastTotalAnswers > 0 ? ($secondLastCorrectAnswers / $secondLastTotalAnswers) * 100 : 0;
+                $secondLastScore = $secondLastTotalAnswers > 0 ? round(($secondLastCorrectAnswers / $secondLastTotalAnswers) * 100, 2) : 0;
 
-                $improvement = $lastScore - $secondLastScore;
+                $improvement = round($lastScore - $secondLastScore, 2);
                 $statistic->improvement = $improvement;
             }
 
@@ -55,5 +56,6 @@ class StatisticsController extends AbstractController
             'statistics' => $statisticsWithAttempts,
         ]);
     }
+
 }
 

@@ -19,7 +19,6 @@ import 'bootstrap';
 import jquery from 'jquery';
 
 jquery(window);
-import './stats'
 import './global'
 import './headerslider'
 import './admin'

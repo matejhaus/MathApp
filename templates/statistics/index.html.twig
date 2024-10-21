@@ -3,49 +3,68 @@
 {% block title %}Vaše statistiky{% endblock %}
 
 {% block body %}
-    {% if not app.user %}
-        Statistiky jsou dostupné pouze pro přihlášené uživatele
-    {% elseif statistics is empty %}
-        <p>Nemáte žádné statistiky.</p>
-    {% else %}
-        <div class="stats-wrapper">
-            {% for stat in statistics %}
-                <div class="stats">
-                    <div class="title-wrapper">
-                        <p class="title">{{ stat.theme.name }}<img src="{{ asset('assets/icons/down-arrow.svg') }}"
-                                                                   alt=""></p>
-                        <p>Level: {{ stat.userLevel }}</p>
-                    </div>
-                    <div class="content">
-                        <div class="item">
-                            <div>
-                                <p>Počet pokusů: {{ stat.totalAttempts }}</p>
-                                <p>Procentuální úspěšnost: {{ stat.rate }}%</p>
-                                <p class="green">Správné odpovědi: {{ stat.correctAnswers }}</p>
-                                <p class="red">Nesprávné odpovědi: {{ stat.incorrectAnswers }}</p>
-                            </div>
-                            <div>
-                                <p>Počet odpovědí: {{ stat.totalAnswers }}</p>
-                                <p>Chybovost: {{ stat.errorRate }}%</p>
-                                <p>Poměr správných odpovědí: {{ stat.correctToIncorrectRatio }}%</p>
+    <div class="statistics-container">
+        {% if not app.user %}
+            <div class="alert alert-warning">Statistiky jsou dostupné pouze pro přihlášené uživatele.</div>
+        {% elseif statistics is empty %}
+            <div class="alert alert-info">Nemáte žádné statistiky.</div>
+        {% else %}
+            <h1 class="statistics-title">Vaše statistiky</h1>
+            <div class="stats-wrapper">
+                {% for stat in statistics %}
+                    <div class="stat-card">
+                        <div class="title-wrapper">
+                            <h2 class="theme-title">{{ stat.theme.name }}</h2>
+                            <p class="level-info">Level: {{ stat.userLevel }}</p>
+                        </div>
+                        <div class="content">
+                            <div class="statistics-overview">
+                                <div class="statistic-item">
+                                    <p>Počet pokusů: <span class="value">{{ stat.totalAttempts }}</span></p>
+                                    <p>Procentuální úspěšnost: <span class="value">{{ stat.rate }}%</span></p>
+                                    <p class="success">Správné odpovědi: <span class="value">{{ stat.correctAnswers }}</span></p>
+                                    <p class="error">Nesprávné odpovědi: <span class="value">{{ stat.incorrectAnswers }}</span></p>
+                                </div>
+                                <div class="statistic-item">
+                                    <p>Počet odpovědí: <span class="value">{{ stat.totalAnswers }}</span></p>
+                                    <p>Chybovost: <span class="value">{{ stat.errorRate }}%</span></p>
+                                    <p>Poměr správných odpovědí: <span class="value">{{ stat.correctToIncorrectRatio }}%</span></p>
+                                </div>
                             </div>
                             {% if stat.attempts %}
                                 <div class="attempts">
-                                    <p class="title">Posledních 5 pokusů</p>
-                                    {% for attempt in stat.attempts %}
-                                        <div class="attempt"><p class="green">{{ attempt.correctAnswers }}</p>
-                                            | <p class="red">{{ attempt.incorrectAnswers }}</p>
-                                        </div>
-                                    {% endfor %}
+                                    <h3 class="attempts-title">Posledních 5 pokusů</h3>
+                                    <div class="attempts-list">
+                                        {% for attempt in stat.attempts %}
+                                            <div class="attempt">
+                                                <div class="attempt-info">
+                                                    <div class="attempt-results">
+                                                        <span class="success">{{ attempt.correctAnswers }}<span class="label"> správné</span></span>
+                                                        <span class="error">{{ attempt.incorrectAnswers }}<span class="label"> nesprávné</span></span>
+                                                    </div>
+                                                </div>
+                                                <div class="attempt-score">
+                                                    <p class="score">Skóre: <span class="score-value">{{ attempt.correctAnswers / (attempt.correctAnswers + attempt.incorrectAnswers) * 100 | round(2) }}%</span></p>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
                                     {% if stat.attempts|length > 1 %}
-                                        <p>Zlepšení: {{ stat.improvement|number_format(2) }} %</p>
+                                        <div class="improvement">
+                                            <h4 class="improvement-title">Zlepšení</h4>
+                                            <div class="improvement-bar">
+                                                <div class="improvement-progress" style="width: {{ stat.improvement > 0 ? stat.improvement : 0 }}%;">
+                                                    {{ stat.improvement|number_format(2) }} %
+                                                </div>
+                                            </div>
+                                        </div>
                                     {% endif %}
                                 </div>
                             {% endif %}
                         </div>
                     </div>
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}
