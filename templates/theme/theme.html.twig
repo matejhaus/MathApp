@@ -20,7 +20,10 @@
            data-user="{{ app.user ? 'true' : 'false' }}">
             <img class="icon" src="{{ asset('assets/icons/practise.svg') }}">Procvičování
         </a>
-        <a class="btn-primary" href="{{ path('test_show', { 'id': theme.id }) }}">
+        <a class="btn-primary test-link{% if examplesCount < 5 %} disabled{% endif %}"
+           href="{{ examplesCount >= 5 ? path('test_show', { 'id': theme.id }) : '#' }}"
+           data-tooltip="{% if examplesCount < 5 %}Test momentálně není dostupný.{% endif %}"
+           data-examples="{{ examplesCount }}">
             <img class="icon" src="{{ asset('assets/icons/exam.svg') }}">Test
         </a>
     </div>

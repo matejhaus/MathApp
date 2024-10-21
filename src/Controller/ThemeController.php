@@ -25,6 +25,7 @@ class ThemeController extends AbstractController
     public function show(int $id, ThemeRepository $themeRepository): Response
     {
         $theme = $themeRepository->find($id);
+        $count = $theme->getExamplesCount();
 
         if (!$theme) {
             throw $this->createNotFoundException('Theme not found');
@@ -32,6 +33,7 @@ class ThemeController extends AbstractController
 
         return $this->render('theme/theme.html.twig', [
             'theme' => $theme,
+            'examplesCount' => $count
         ]);
     }
 

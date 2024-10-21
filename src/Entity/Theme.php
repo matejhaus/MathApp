@@ -138,6 +138,11 @@ class Theme
         return $this->examples;
     }
 
+    public function getExamplesCount(): int
+    {
+        return $this->examples->count();
+    }
+
     public function addExample(Example $example): static
     {
         if (!$this->examples->contains($example)) {
