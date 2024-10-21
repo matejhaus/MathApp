@@ -1,4 +1,6 @@
 @import "../_btns.scss";
+@import "../_variables.scss";
+
 .test_header {
   display: flex;
   justify-content: center;
@@ -14,7 +16,7 @@
 .example {
   display: flex;
   gap: 20px;
-  border-radius: 15px;
+  border-radius: $border-radius;
   align-items: center;
   border: 1px solid black;
   padding: 5px;

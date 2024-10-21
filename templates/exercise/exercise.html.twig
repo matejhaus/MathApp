@@ -11,17 +11,22 @@
 {% block body %}
     <div class="exercise">
         {% for example in examples %}
-            {% if example.format %}
-                {% set format = example.format %}
-            {% endif %}
+            {% set format = example.format is defined ? example.format : '' %}
             <div class="example">
                 <div class="example-header">
-                    {{ example.equation }}
+                    <span class="equation">{{ example.equation }}</span>
                     <input type="text" class="answer-input" placeholder="Zadejte odpověď {{ format }}" />
-                    <button class="submit-answer btn-primary" data-theme="{{ theme }}" data-difficulty="{{ difficulty }}" data-equation="{{ example.equation }}">Potvrdit</button>
+                    <button class="submit-answer btn-primary"
+                            data-theme="{{ theme }}"
+                            data-difficulty="{{ difficulty }}"
+                            data-equation="{{ example.equation }}">
+                        Potvrdit
+                    </button>
                 </div>
-                <div class="answer" style="display: none;"></div>
-                <div class="steps" style="display: none;"></div>
+                <div class="results-wrapper" style="display: none;">
+                    <div class="answer"></div>
+                    <div class="steps"></div>
+                </div>
             </div>
         {% endfor %}
         <div class="results">
@@ -32,9 +37,9 @@
             </div>
             <button class="btn-primary" onclick="location.reload()">Vygenerovat nové příklady</button>
             <button class="btn-primary" onclick="history.back()">Zpět</button>
-
         </div>
     </div>
+
 {% endblock %}
 
 {% block javascripts %}

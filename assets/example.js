@@ -15,6 +15,7 @@ $(document).ready(function () {
                 theme: theme
             },
             success: function (response) {
+                const answerWrapper = button.closest('.example').find('.results-wrapper');
                 const answerDiv = button.closest('.example').find('.answer');
                 const results = button.closest('.exercise').find('.results');
                 const correctResults = button.closest('.exercise').find('.correct-results');
@@ -36,7 +37,7 @@ $(document).ready(function () {
                     updateLocalStorage(false);
                     incorrectResults.text(parseInt(localStorage.getItem('incorrectCount')));
                 }
-                answerDiv.show();
+                answerWrapper.show();
                 results.show();
 
                 const stepsDiv = button.closest('.example').find('.steps');

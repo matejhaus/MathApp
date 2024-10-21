@@ -22,5 +22,4 @@ jquery(window);
 import './global'
 import './headerslider'
 import './admin'
-import './example'
 import './theme'
