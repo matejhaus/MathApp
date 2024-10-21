@@ -10,11 +10,11 @@
   color: white;
 
   p {
-    margin: 0;
+    margin: 0 0 10px 0;
   }
 
   img {
-    max-height: 110px;
+    max-height: 130px;
     padding: 20px 30px;
   }
 
@@ -42,6 +42,7 @@
     border-top-right-radius: 30% 100%;
     border-right: 5px solid white;
     background-color: $color-primary;
+    align-items: center;
 
     @media (max-width: 450px) {
       display: none;

@@ -7,6 +7,8 @@
         <div class="profile-banner">
             <div class="text-wrapper">
                 <p class="title">Profil</p>
+                <p>Jméno: {{ app.user.firstName }} {{ app.user.lastName }}</p>
+                <p>E-mail: {{ app.user.email }}</p>
                 <a href="{{ app.user ? path('app_logout') : path('app_login') }}"
                    class="btn-primary">{% if app.user %}Odhlásit se{% else %}Přihlásit se{% endif %}</a>
             </div>
@@ -21,6 +23,7 @@
             </div>
             <div class="text-wrapper">
                 <p class="title">Statistiky</p>
+                <p>Máte {{ statsCount | inflection('vytvořenou', 'vytvořené', 'vytvořených') }} {{ statsCount }} {{ statsCount | inflection('statistiku', 'statistiky', 'statistik') }}</p>
                 <a href="{{ path('app_statistics') }}"
                    class="btn-primary">{% if app.user %}Pokračovat{% else %}Přihlásit se{% endif %}</a>
             </div>

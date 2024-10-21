@@ -165,6 +165,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->userStatistics;
     }
 
+    public function getUserStatisticsCount(): int
+    {
+        return $this->userStatistics->count();
+    }
+
     public function addUserStatistic(UserStatistics $userStatistic): static
     {
         if (!$this->userStatistics->contains($userStatistic)) {
