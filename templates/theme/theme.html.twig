@@ -14,8 +14,20 @@
 {% block body %}
     <div class="test">
         <a class="btn-primary" href="/"><img class="icon" src="{{ asset('assets/icons/back.svg') }}">Zpět</a>
-        <a class="btn-primary" href="{{ path('app_exercise', { 'id': theme.id }) }}"><img class="icon" src="{{ asset('assets/icons/practise.svg') }}">Procvičování</a>
-        <a class="btn-primary" href="{{ path('test_show', { 'id': theme.id }) }}"><img class="icon" src="{{ asset('assets/icons/exam.svg') }}">Test</a>
+        <a class="btn-primary practise-link{% if not app.user %} disabled{% endif %}"
+           href="{{ app.user ? path('app_exercise', { 'id': theme.id }) : '#' }}"
+           data-tooltip="{% if not app.user %}Musíte být přihlášeni pro procvičování.{% endif %}"
+           data-user="{{ app.user ? 'true' : 'false' }}">
+            <img class="icon" src="{{ asset('assets/icons/practise.svg') }}">Procvičování
+        </a>
+        <a class="btn-primary" href="{{ path('test_show', { 'id': theme.id }) }}">
+            <img class="icon" src="{{ asset('assets/icons/exam.svg') }}">Test
+        </a>
     </div>
+
+    <div id="tooltip"></div>
+
     <div class="theme-content">{{ theme.content|raw }}</div>
 {% endblock %}
+
+

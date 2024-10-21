@@ -1,3 +1,5 @@
+@import "../_variables.scss";
+
 .exercise {
   background-color: #f9f9f9;
   padding: 20px;
@@ -65,5 +67,49 @@
       color: #2196f3;
       font-weight: bold;
     }
+  }
+}
+
+.results {
+  position: fixed;
+  left: 15%;
+  bottom: 50%;
+  padding: 20px;
+  border: 1px solid black;
+  border-radius: 15px;
+  background-color: $color-primary;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  text-align: center;
+
+  p {
+    margin: 0;
+    font-weight: bold;
+  }
+
+  >div {
+    display: flex;
+    gap: 5px;
+
+    >div {
+      flex: 1;
+    }
+  }
+
+  .incorrect-results {
+    background-color: #ff4d4d;
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+    color: #cccccc;
+  }
+
+  .correct-results {
+    background-color: #4caf50;
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+    color: #cccccc;
   }
 }

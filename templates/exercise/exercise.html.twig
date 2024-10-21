@@ -10,7 +10,6 @@
 
 {% block body %}
     <div class="exercise">
-        {% set format = '' %}
         {% for example in examples %}
             {% if example.format %}
                 {% set format = example.format %}
@@ -25,7 +24,16 @@
                 <div class="steps" style="display: none;"></div>
             </div>
         {% endfor %}
-        <div class="results" style="display: none"></div>
+        <div class="results">
+            <p>Odpovědi</p>
+            <div>
+                <div class="incorrect-results">0</div>
+                <div class="correct-results">0</div>
+            </div>
+            <button class="btn-primary" onclick="location.reload()">Vygenerovat nové příklady</button>
+            <button class="btn-primary" onclick="history.back()">Zpět</button>
+
+        </div>
     </div>
 {% endblock %}
 

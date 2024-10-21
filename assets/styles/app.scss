@@ -1,10 +1,17 @@
 @import "_variables.scss";
 
-body {
+html, body {
   font-family: Arial, sans-serif;
   margin: 0;
-  padding: 0;
   background-color: #fffbf7;
+  min-height: 100vh;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  flex: 1;
 }
 
 .container {
@@ -44,6 +51,7 @@ body {
   border-radius: 50%;
   cursor: pointer;
   transition: border 0.5s ease-in;
+  z-index: 10;
 
   img {
     transition: transform 0.5s ease;

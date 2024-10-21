@@ -5,7 +5,6 @@ $(document).ready(function () {
         const equation = button.data('equation');
         const difficulty = button.data('difficulty');
         const theme = button.data('theme');
-        // console.log(button+"\n"+answerInput+"\n"+equation+"\n"+difficulty+"\n"+theme);
 
         $.ajax({
             type: 'POST',
@@ -18,6 +17,8 @@ $(document).ready(function () {
             success: function (response) {
                 const answerDiv = button.closest('.example').find('.answer');
                 const results = button.closest('.exercise').find('.results');
+                const correctResults = button.closest('.exercise').find('.correct-results');
+                const incorrectResults = button.closest('.exercise').find('.incorrect-results');
                 answerDiv.text(response.solution);
                 const responseSolution = parseFloat(response.solution);
                 const userAnswer = parseFloat(answerInput.val().trim());
@@ -27,13 +28,13 @@ $(document).ready(function () {
                     answerDiv.addClass('correct_result');
                     answerDiv.text(response.solution);
                     updateLocalStorage(true);
-                    results.text(parseInt(localStorage.getItem('correctCount')) + " / " + parseInt(localStorage.getItem('incorrectCount')));
+                    correctResults.text(parseInt(localStorage.getItem('correctCount')));
                 } else {
                     answerDiv.removeClass('correct_result');
                     answerDiv.addClass('incorrect_result');
                     answerDiv.text(response.solution);
                     updateLocalStorage(false);
-                    results.text(parseInt(localStorage.getItem('correctCount')) + " / " + parseInt(localStorage.getItem('incorrectCount')));
+                    incorrectResults.text(parseInt(localStorage.getItem('incorrectCount')));
                 }
                 answerDiv.show();
                 results.show();
