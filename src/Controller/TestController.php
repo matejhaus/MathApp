@@ -88,7 +88,7 @@ class TestController extends AbstractController
             );
 
             $userAttempts = $userAttemptsRepository->findBy(
-                ['user' => $user],
+                ['user' => $user, 'theme' => $theme],
                 ['id' => 'ASC']
             );
 
@@ -102,7 +102,7 @@ class TestController extends AbstractController
                 $entityManager->persist($newAttempt);
             } else {
                 $oldestAttempt = $userAttempts[0];
-                $oldestAttempt->setTopic($theme);
+                $oldestAttempt->setTheme($theme);
                 $oldestAttempt->setCorrectAnswers($correctCount);
                 $oldestAttempt->setIncorrectAnswers($incorrectCount);
             }
