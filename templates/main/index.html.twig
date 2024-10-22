@@ -1,14 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}EasyMath{% endblock %}
+{% block title %}MathLoft{% endblock %}
 {% block banner %}{% include 'Components/HeaderSlider.html.twig' with {'quotes': quotes} %}{% endblock %}
 {% block body %}
     <div class="home-banners">
         <div class="profile-banner">
             <div class="text-wrapper">
                 <p class="title">Profil</p>
-                <p>Jméno: {{ app.user.firstName }} {{ app.user.lastName }}</p>
-                <p>E-mail: {{ app.user.email }}</p>
+                {% if app.user %}
+                    <p>Jméno: {{ app.user.firstName }} {{ app.user.lastName }}</p>
+                    <p>E-mail: {{ app.user.email }}</p>
+                {% endif %}
                 <a href="{{ app.user ? path('app_logout') : path('app_login') }}"
                    class="btn-primary">{% if app.user %}Odhlásit se{% else %}Přihlásit se{% endif %}</a>
             </div>
@@ -23,7 +25,9 @@
             </div>
             <div class="text-wrapper">
                 <p class="title">Statistiky</p>
-                <p>Máte {{ statsCount | inflection('vytvořenou', 'vytvořené', 'vytvořených') }} {{ statsCount }} {{ statsCount | inflection('statistiku', 'statistiky', 'statistik') }}</p>
+                {% if app.user %}
+                    <p>Máte {{ statsCount | inflection('vytvořenou', 'vytvořené', 'vytvořených') }} {{ statsCount }} {{ statsCount | inflection('statistiku', 'statistiky', 'statistik') }}</p>
+                {% endif %}
                 <a href="{{ path('app_statistics') }}"
                    class="btn-primary">{% if app.user %}Pokračovat{% else %}Přihlásit se{% endif %}</a>
             </div>
