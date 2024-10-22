@@ -30,11 +30,13 @@
         <button id="toTopBtn" style="display: none;"><img src="{{ asset('assets/icons/top-arrow.svg') }}" alt=""></button>
     {% endblock %}
     </body>
-    <div class="footer">
-        <div class="container">
-            {% block footer %}
-                {% include 'Components/Footer.html.twig' %}
-            {% endblock %}
+    <footer>
+        <div class="footer">
+            <div class="container">
+                {% block footer %}
+                    {% include 'Components/Footer.html.twig' %}
+                {% endblock %}
+            </div>
         </div>
-    </div>
+    </footer>
 </html>
