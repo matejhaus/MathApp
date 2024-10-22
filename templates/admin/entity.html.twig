@@ -15,26 +15,44 @@
             <table>
                 <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>
+                        <a href="{{ path('app_admin_entity', {'entity': entity, 'sortBy': 'id', 'sortOrder': sortOrder == 'ASC' ? 'DESC' : 'ASC'}) }}">
+                            ID
+                            {% if sortBy == 'id' %}
+                                {% if sortOrder == 'ASC' %} ↑ {% else %} ↓ {% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
                     {% if entity == 'examples' %}
-                        <th>Theme ID</th>
+                        <th>
+                            <a href="{{ path('app_admin_entity', {'entity': entity, 'sortBy': 'theme', 'sortOrder': sortOrder == 'ASC' ? 'DESC' : 'ASC'}) }}">
+                                Theme ID
+                                {% if sortBy == 'theme' %}
+                                    {% if sortOrder == 'ASC' %} ↑ {% else %} ↓ {% endif %}
+                                {% endif %}
+                            </a>
+                        </th>
                         <th>Question</th>
                         <th>Result</th>
-                        <th>Actions</th>
                     {% elseif entity == 'users' %}
                         <th>Email</th>
                         <th>First Name</th>
                         <th>Last Name</th>
-                        <th>Actions</th>
                     {% elseif entity == 'themes' %}
                         <th>Name</th>
                         <th>Description</th>
                         <th>Created</th>
                         <th>Updated</th>
-                        <th>Actions</th>
                     {% elseif entity == 'quotes' %}
-                        <th>position</th>
-                        <th>quote</th>
+                        <th>
+                            <a href="{{ path('app_admin_entity', {'entity': entity, 'sortBy': 'position', 'sortOrder': sortOrder == 'ASC' ? 'DESC' : 'ASC'}) }}">
+                                Position
+                                {% if sortBy == 'position' %}
+                                    {% if sortOrder == 'ASC' %} ↑ {% else %} ↓ {% endif %}
+                                {% endif %}
+                            </a>
+                        </th>
+                        <th>Quote</th>
                     {% endif %}
                 </tr>
                 </thead>

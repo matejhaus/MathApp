@@ -22,28 +22,29 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/{entity}', name: 'app_admin_entity')]
+    #[Route('/admin/{entity}/{sortBy}/{sortOrder}', name: 'app_admin_entity', defaults: ['sortBy' => 'id', 'sortOrder' => 'ASC'])]
     public function showEntity(
         string $entity,
+        string $sortBy,
+        string $sortOrder,
         ThemeRepository $themeRepository,
         ExampleRepository $exampleRepository,
         UserRepository $userRepository,
         QuotesRepository $quotesRepository
     ): Response {
-        $data = [];
 
         switch ($entity) {
             case 'themes':
-                $data = $themeRepository->findAllThemes();
+                $data = $themeRepository->findBy([], [$sortBy => $sortOrder]);
                 break;
             case 'examples':
-                $data = $exampleRepository->findAll();
+                $data = $exampleRepository->findBy([], [$sortBy => $sortOrder]);
                 break;
             case 'users':
-                $data = $userRepository->findAll();
+                $data = $userRepository->findBy([], [$sortBy => $sortOrder]);
                 break;
             case 'quotes':
-                $data = $quotesRepository->findAll();
+                $data = $quotesRepository->findBy([], [$sortBy => $sortOrder]);
                 break;
             default:
                 throw $this->createNotFoundException('Entity not found.');
@@ -51,7 +52,9 @@ class AdminController extends AbstractController
 
         return $this->render('admin/entity.html.twig', [
             'data' => $data,
-            'entity' => $entity
+            'entity' => $entity,
+            'sortBy' => $sortBy,
+            'sortOrder' => $sortOrder
         ]);
     }
 }
