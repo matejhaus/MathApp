@@ -42,7 +42,7 @@
 
       &.incorrect_result {
         background-color: rgba(231, 76, 60, 0.1);
-        color: #e74c3c;
+        color: $red;
         border: 1px solid #e74c3c;
         padding: 15px;
         font-weight: bold;
@@ -61,7 +61,7 @@
 
       &.correct_result {
         background-color: rgba(46, 204, 113, 0.1);
-        color: #2ecc71;
+        color: $green;
         border: 1px solid #2ecc71;
         padding: 15px;
         font-weight: bold;
