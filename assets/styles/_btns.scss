@@ -26,11 +26,11 @@
 }
 
 .btn-secondary {
-  @include button-base(10px 15px, $color-secondary, white, 250px);
+  @include button-base(10px 15px, $color-secondary, $white, 250px);
 }
 
 .btn-block {
-  @include button-base(30px 40px, $color-secondary, black, 100%, 100%);
+  @include button-base(30px 40px, $color-secondary, $black, 100%, 100%);
 }
 
 .btn-link {

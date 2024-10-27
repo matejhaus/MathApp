@@ -35,7 +35,7 @@ body {
 .header {
   height: 150px;
   background-color: $background-dark;
-  border-bottom: 1px solid white;
+  border-bottom: $border-white;
 }
 
 #toTopBtn {
@@ -45,7 +45,7 @@ body {
   padding: 25px 25px;
   background-color: $color-secondary;
   border: none;
-  color: white;
+  color: $white;
   border-radius: 50%;
   cursor: pointer;
   transition: border 0.5s ease-in;
