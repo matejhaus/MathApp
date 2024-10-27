@@ -1,18 +1,19 @@
 @import "_variables.scss";
 
-.btn-primary {
+@mixin button-base($padding, $bg-color, $text-color, $max-width: auto, $width: auto) {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 15px;
-  background-color: $color-secondary;
+  padding: $padding;
+  background-color: $bg-color;
+  color: $text-color;
   border: none;
-  max-width: 250px;
   border-radius: 10px;
   text-decoration: none;
   text-align: center;
   transition: all 0.5s ease;
-  color: white;
+  max-width: $max-width;
+  width: $width;
 
   &:hover {
     background-color: $color-one;
@@ -20,42 +21,16 @@
   }
 }
 
-.btn-secondary {
-  padding: 10px 15px;
-  background-color: $color-secondary;
-  border: none;
-  max-width: 250px;
-  color: white;
-  border-radius: 10px;
-  text-decoration: none;
-  text-align: center;
-  transition: all 0.5s ease;
+.btn-primary {
+  @include button-base(10px 15px, $color-secondary, white, 250px);
+}
 
-  &:hover {
-    color: white;
-    background-color: $color-one;
-  }
+.btn-secondary {
+  @include button-base(10px 15px, $color-secondary, white, 250px);
 }
 
 .btn-block {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: $color-secondary;
-  border: none;
-  width: 100%;
-  color: black;
-  border-radius: 10px;
-  text-decoration: none;
-  text-align: center;
-  transition: all 0.5s ease;
-  padding: 30px 40px;
-  min-width: 100px;
-
-  &:hover {
-    color: white;
-    background-color: $color-one;
-  }
+  @include button-base(30px 40px, $color-secondary, black, 100%, 100%);
 }
 
 .btn-link {
