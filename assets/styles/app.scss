@@ -34,7 +34,7 @@ body {
 
 .header {
   height: 150px;
-  background-color: #28282B;
+  background-color: $background-dark;
   border-bottom: 1px solid white;
 }
 
@@ -59,7 +59,7 @@ body {
 
 #toTopBtn:hover {
   background-color: $color-two;
-  border: 1px solid black;
+  border: $border;
 
   img {
     transform: rotate(360deg);

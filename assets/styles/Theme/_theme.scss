@@ -6,12 +6,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #333;
+  background-color: $background-dark;
   color: white;
 }
 
 .test {
-  background-color: #404040;
+  background-color: $background-dark;
   border: 1px solid white;
   padding: 20px 30px;
   border-radius: $border-radius;
@@ -44,7 +44,7 @@
   body {
     line-height: 1.6;
     background-color: #f4f4f4;
-    color: #333;
+    color: $background-dark;
     margin: 20px;
     padding: 0 20px;
   }
@@ -139,7 +139,7 @@
 #tooltip {
   display: none;
   position: absolute;
-  background: #333;
+  background: $background-dark;
   color: #fff;
   padding: 5px;
   border-radius: $border-radius;

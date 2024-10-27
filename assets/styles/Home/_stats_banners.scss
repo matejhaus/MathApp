@@ -5,8 +5,8 @@
   gap: 50px;
   margin: 20px 0;
   border-radius: $border-radius;
-  border: 1px solid black;
-  background-color: #28282B;
+  border: $border;
+  background-color: $background-dark;
   color: white;
 
   p {
