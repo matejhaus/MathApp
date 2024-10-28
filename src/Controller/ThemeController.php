@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Example;
 use App\Entity\Theme;
 use App\Form\ThemeType;
 use App\Repository\ThemeRepository;
@@ -89,6 +90,12 @@ class ThemeController extends AbstractController
         }
 
         if ($request->isMethod('POST')) {
+
+            $examples = $this->entityManager->getRepository(Example::class)->findBy(['theme' => $theme]);
+            foreach ($examples as $example) {
+                $this->entityManager->remove($example);
+            }
+
             $this->entityManager->remove($theme);
             $this->entityManager->flush();
 

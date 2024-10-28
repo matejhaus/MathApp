@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\UserAttempts;
+use App\Entity\UserStatistics;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -73,6 +75,17 @@ class UserController extends AbstractController
         }
 
         if ($request->isMethod('POST')) {
+
+            $userStatistics = $this->entityManager->getRepository(UserStatistics::class)->findBy(['user' => $user]);
+            foreach ($userStatistics as $statistic) {
+                $this->entityManager->remove($statistic);
+            }
+
+            $userAttempts = $this->entityManager->getRepository(UserAttempts::class)->findBy(['user' => $user]);
+            foreach ($userAttempts as $attempts) {
+                $this->entityManager->remove($attempts);
+            }
+
             $this->entityManager->remove($user);
             $this->entityManager->flush();
 

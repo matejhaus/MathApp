@@ -18,7 +18,7 @@ class UserStatisticsRepository extends ServiceEntityRepository
     }
 
     //    /**
-    //     * @return UserStatistics[] Returns an array of UserStatistics objects
+    //     * @return UserStatisticsType[] Returns an array of UserStatisticsType objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -32,7 +32,7 @@ class UserStatisticsRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?UserStatistics
+    //    public function findOneBySomeField($value): ?UserStatisticsType
     //    {
     //        return $this->createQueryBuilder('u')
     //            ->andWhere('u.exampleField = :val')
