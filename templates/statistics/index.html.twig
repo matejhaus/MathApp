@@ -2,6 +2,11 @@
 
 {% block title %}Vaše statistiky{% endblock %}
 
+{% block javascripts %}
+    {{ encore_entry_script_tags('stats') }}
+    {% block importmap %}{{ importmap('stats') }}{% endblock %}
+{% endblock %}
+
 {% block body %}
     <div class="statistics-container">
         {% if not app.user %}

@@ -1,3 +1,5 @@
+import './styles/Admin/Entity/_entity.scss';
+import './styles/Admin/_forms.scss';
 $(document).ready(function() {
     $('.openDialog').on('click', function(event) {
         event.preventDefault();
