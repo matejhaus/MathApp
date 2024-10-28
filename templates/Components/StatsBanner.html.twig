@@ -1,0 +1,13 @@
+<div class="stats-banner">
+    <div class="image">
+        <img src="{{ asset('assets/icons/stats.svg') }}" alt="stats">
+    </div>
+    <div class="text-wrapper">
+        <p class="title">Statistiky</p>
+        {% if app.user %}
+            <p>Máte {{ statsCount | inflection('vytvořenou', 'vytvořené', 'vytvořených') }} {{ statsCount }} {{ statsCount | inflection('statistiku', 'statistiky', 'statistik') }}</p>
+        {% endif %}
+        <a href="{{ path('app_statistics') }}"
+           class="btn-primary">{% if app.user %}Pokračovat{% else %}Přihlásit se{% endif %}</a>
+    </div>
+</div>

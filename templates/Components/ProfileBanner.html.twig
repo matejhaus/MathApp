@@ -1,0 +1,14 @@
+<div class="profile-banner">
+    <div class="text-wrapper">
+        <p class="title">Profil</p>
+        {% if app.user %}
+            <p>Jméno: {{ app.user.firstName }} {{ app.user.lastName }}</p>
+            <p>E-mail: {{ app.user.email }}</p>
+        {% endif %}
+        <a href="{{ app.user ? path('app_logout') : path('app_login') }}"
+           class="btn-primary">{% if app.user %}Odhlásit se{% else %}Přihlásit se{% endif %}</a>
+    </div>
+    <div class="image">
+        <img src="{{ asset('assets/icons/user.svg') }}" alt="stats">
+    </div>
+</div>
