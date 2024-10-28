@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\QuotesRepository;
 use App\Repository\ThemeRepository;
 use App\Repository\ExampleRepository;
+use App\Repository\UserAttemptsRepository;
 use App\Repository\UserRepository;
 use App\Repository\UserStatisticsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,7 +30,8 @@ class AdminController extends AbstractController
         ExampleRepository $exampleRepository,
         UserRepository $userRepository,
         QuotesRepository $quotesRepository,
-        UserStatisticsRepository $userStatisticsRepository
+        UserStatisticsRepository $userStatisticsRepository,
+        UserAttemptsRepository $userAttemptsRepository
     ): Response {
 
         $sortOrder = strtoupper($sortOrder);
@@ -52,6 +54,9 @@ class AdminController extends AbstractController
                 break;
             case 'userStatistics':
                 $data = $userStatisticsRepository->findBy([], [$sortBy => $sortOrder]);
+                break;
+            case 'userAttempts':
+                $data = $userAttemptsRepository->findBy([], [$sortBy => $sortOrder]);
                 break;
             default:
                 throw $this->createNotFoundException('Entity not found.');

@@ -74,6 +74,25 @@
                         <th>IncorrectAnswers</th>
                         <th>TotalAttempts</th>
                         <th>UserLevel</th>
+                    {% elseif entity == 'userAttempts'%}
+                        <th>
+                            <a href="{{ path('app_admin_entity', {'entity': entity, 'sortBy': 'user', 'sortOrder': sortOrder == 'ASC' ? 'DESC' : 'ASC'}) }}">
+                                User ID
+                                {% if sortBy == 'user' %}
+                                    {% if sortOrder == 'ASC' %} ↑ {% else %} ↓ {% endif %}
+                                {% endif %}
+                            </a>
+                        </th>
+                        <th>
+                            <a href="{{ path('app_admin_entity', {'entity': entity, 'sortBy': 'theme', 'sortOrder': sortOrder == 'ASC' ? 'DESC' : 'ASC'}) }}">
+                                Theme ID
+                                {% if sortBy == 'theme' %}
+                                    {% if sortOrder == 'ASC' %} ↑ {% else %} ↓ {% endif %}
+                                {% endif %}
+                            </a>
+                        </th>
+                        <th>CorrectAnswers</th>
+                        <th>IncorrectAnswers</th>
                     {% endif %}
                     <th>Akce</th>
                 </tr>
@@ -105,6 +124,11 @@
                             <th>{{ data.incorrectAnswers }}</th>
                             <th>{{ data.totalAttempts }}</th>
                             <th>{{ data.userLevel }}</th>
+                        {% elseif entity == 'userAttempts' %}
+                            <th>{{ data.user.id }}</th>
+                            <th>{{ data.theme.id }}</th>
+                            <th>{{ data.correctAnswers }}</th>
+                            <th>{{ data.incorrectAnswers }}</th>
                         {% endif %}
                         <td class="actions">
                             <a href="{{ path('edit_' ~ entity, {'id': data.id}) }}" class="openDialog" target="_blank">Edit</a>
