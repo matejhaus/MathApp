@@ -18,9 +18,11 @@
                         <input type="text" name="answers[{{ loop.index0 }}]" placeholder="Výsledek"
                                value="{{ user_answers[loop.index0] ?? '' }}">
                         {% if results|length > 0 %}
-                            <span>{{ results[loop.index0].is_correct ? 'Správně' : 'Chybně'  }}</span>
-                            {% if results[loop.index0].is_correct == false%}
-                                Správná odpověď: {{ results[loop.index0].correct_answer }}
+                            <span class="{{ results[loop.index0].is_correct ? 'correct' : 'incorrect' }}">
+                                 {{ results[loop.index0].is_correct ? 'Správně' : 'Chybně' }}
+                            </span>
+                            {% if results[loop.index0].is_correct == false %}
+                                <span class="correct-answer">Správná odpověď: {{ results[loop.index0].correct_answer }}</span>
                             {% endif %}
                         {% endif %}
                     </div>
