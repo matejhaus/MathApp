@@ -16,6 +16,7 @@
                 <div class="example-header">
                     <span class="equation">{{ example.equation }}</span>
                     <input type="text" class="answer-input" placeholder="Zadejte odpověď {{ format }}" />
+                    <input type="hidden" id="csrf_token" value="{{ csrf_token('solve') }}">
                     <button class="submit-answer btn-primary"
                             data-theme="{{ theme }}"
                             data-difficulty="{{ difficulty }}"

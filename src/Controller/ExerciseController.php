@@ -16,10 +16,19 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class ExerciseController extends AbstractController
 {
     private ?object $generator = null;
+
+    private $csrfTokenManager;
+
+    public function __construct(CsrfTokenManagerInterface $csrfTokenManager)
+    {
+        $this->csrfTokenManager = $csrfTokenManager;
+    }
 
     private function createGenerator(string $theme)
     {
@@ -76,6 +85,11 @@ class ExerciseController extends AbstractController
     #[Route('/solve', name: 'app_solve', methods: 'POST')]
     public function solve(Request $request): JsonResponse
     {
+        $csrfToken = $request->request->get('_csrf_token');
+        if (!$this->csrfTokenManager->isTokenValid(new CsrfToken('solve', $csrfToken))) {
+            return $this->json(['error' => 'Neplatný CSRF token.'], 403);
+        }
+
         $equation = $request->request->get('equation', '');
         $difficulty = $request->request->get('difficulty', '');
         $theme = $request->request->get('theme', '');

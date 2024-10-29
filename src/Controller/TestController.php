@@ -11,10 +11,19 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class TestController extends AbstractController
 {
+    private CsrfTokenManagerInterface $csrfTokenManager;
+
+    public function __construct(CsrfTokenManagerInterface $csrfTokenManager)
+    {
+        $this->csrfTokenManager = $csrfTokenManager;
+    }
     #[Route('/test/{id}', name: 'test_show')]
     public function show(int $id, Request $request, ThemeRepository $themeRepository, ExampleRepository $exampleRepository,
                          UserStatisticsRepository $userStatisticsRepository,UserAttemptsRepository $userAttemptsRepository
@@ -35,6 +44,12 @@ class TestController extends AbstractController
         $user = $this->getUser();
 
         if ($request->isMethod('POST')) {
+
+            $csrfToken = $request->request->get('_csrf_token');
+            if (!$this->csrfTokenManager->isTokenValid(new CsrfToken('test_submit', $csrfToken))) {
+                throw new BadRequestHttpException('Neplatný CSRF token.');
+            }
+
             $allData = $request->request->all();
             $answers = $allData['answers'] ?? [];
 

@@ -10,6 +10,7 @@
     </div>
     <div class="test-form">
         <form action="{{ path('test_show', { 'id': theme.id }) }}" method="post">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('test_submit') }}">
             <div class="examples">
                 {% for example in examples %}
                     <div class="example">

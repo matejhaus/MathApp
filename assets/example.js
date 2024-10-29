@@ -5,6 +5,7 @@ $(document).ready(function () {
         const equation = button.data('equation');
         const difficulty = button.data('difficulty');
         const theme = button.data('theme');
+        const csrfToken = $('#csrf_token').val();
 
         $.ajax({
             type: 'POST',
@@ -12,7 +13,8 @@ $(document).ready(function () {
             data: {
                 equation: equation,
                 difficulty: difficulty,
-                theme: theme
+                theme: theme,
+                _csrf_token: csrfToken
             },
             success: function (response) {
                 const answerWrapper = button.closest('.example').find('.results-wrapper');
