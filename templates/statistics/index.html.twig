@@ -7,6 +7,12 @@
     {% block importmap %}{{ importmap('stats') }}{% endblock %}
 {% endblock %}
 
+{% block banner %}
+    <div class="theme_header">
+        <h1>Statistiky</h1>
+    </div>
+{% endblock %}
+
 {% block body %}
     <div class="statistics-container">
         {% if not app.user %}
@@ -14,7 +20,6 @@
         {% elseif statistics is empty %}
             <div class="alert alert-info">Nemáte žádné statistiky.</div>
         {% else %}
-            <h1 class="statistics-title">Vaše statistiky</h1>
             {% include 'Components/StatsCards.html.twig' with {'statistics':statistics} %}
         {% endif %}
     </div>

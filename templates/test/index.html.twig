@@ -3,11 +3,12 @@
 {% block header %}
     {{ parent() }}
 {% endblock %}
-
-{% block body %}
-    <div class="test_header">
+{% block banner %}
+    <div class="theme_header">
         <h1>{{ title }}</h1>
     </div>
+{% endblock %}
+{% block body %}
     <div class="test-form">
         <form action="{{ path('test_show', { 'id': theme.id }) }}" method="post">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('test_submit') }}">
