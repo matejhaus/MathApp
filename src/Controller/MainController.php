@@ -13,7 +13,10 @@ use Symfony\Component\Routing\Attribute\Route;
 class MainController extends AbstractController
 {
     #[Route('/', name: 'app_main')]
-    public function index(ThemeRepository $themeRepository, QuotesRepository $quotesRepository, UserStatisticsRepository $userStatistics, Security $security): Response
+    public function index(ThemeRepository $themeRepository,
+                          QuotesRepository $quotesRepository,
+                          UserStatisticsRepository $userStatistics,
+                          Security $security): Response
     {
         $user = $security->getUser();
 

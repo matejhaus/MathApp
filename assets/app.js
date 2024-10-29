@@ -5,7 +5,7 @@ import './styles/Home/_stats_banners.scss';
 import './styles/Home/_profile_banner.scss';
 import './styles/app.scss';
 import './styles/Navbar/_Navbar.scss';
-import './styles/LoginForm/_LoginForm.scss';
+import './styles/Forms/_Forms.scss';
 import './styles/HeaderSlider/_HeaderSlider.scss';
 import './styles/Test/_test.scss';
 import './styles/Theme/_theme.scss';

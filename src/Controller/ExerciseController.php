@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\ExerciseType;
 use App\Generators\AdditionSubtractionGenerator;
 use App\Generators\DivisionGenerator;
 use App\Generators\EquationGenerator;
@@ -16,19 +17,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Csrf\CsrfToken;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class ExerciseController extends AbstractController
 {
     private ?object $generator = null;
-
-    private $csrfTokenManager;
-
-    public function __construct(CsrfTokenManagerInterface $csrfTokenManager)
-    {
-        $this->csrfTokenManager = $csrfTokenManager;
-    }
 
     private function createGenerator(string $theme)
     {
@@ -55,41 +47,77 @@ class ExerciseController extends AbstractController
     }
 
     #[Route('/exercise/{id}', name: 'app_exercise')]
-    public function index(int $id, ThemeRepository $themeRepository): Response
+    public function index(int $id, ThemeRepository $themeRepository, Request $request): Response
     {
         $theme = $themeRepository->find($id);
+
+        if (!$theme) {
+            throw $this->createNotFoundException('Téma nebylo nalezeno.');
+        }
+
+        $form = $this->createForm(ExerciseType::class, null, [
+            'theme_id' => $theme->getId(),
+            'theme_name'=>$theme->getName()
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $minValue = $data['min_value'];
+            $maxValue = $data['max_value'];
+            $numberOfExamples = $data['number_of_examples'];
+            $difficulty = $data['difficulty'];
+
+            $this->generator = $this->createGenerator($theme->getName());
+            $examples = $this->generator->generate($minValue, $maxValue, $numberOfExamples, $difficulty);
+
+            return $this->render('exercise/exercise.html.twig', [
+                'examples' => $examples,
+                'theme' => $theme->getName(),
+                'difficulty' => $difficulty,
+            ]);
+        }
+
         return $this->render('exercise/index.html.twig', [
             'theme' => $theme,
+            'form' => $form->createView(),
         ]);
     }
 
     #[Route('/exercise/{theme}/test', name: 'app_exercise_test')]
-    public function showEntity(string $theme, Request $request): Response
+    public function showEntity(string $theme, Request $request, ThemeRepository $themeRepository): Response
     {
-        $minValue = $request->query->getInt('min_value', 1);
-        $maxValue = $request->query->getInt('max_value', 10);
-        $numberOfExamples = $request->query->getInt('number_of_examples', 1);
-        $difficulty = $request->query->get('difficulty', 'easy');
-
-        $this->generator = $this->createGenerator($theme);
-
-        $examples = $this->generator->generate($minValue, $maxValue, $numberOfExamples, $difficulty);
-
-        return $this->render('exercise/exercise.html.twig', [
-            'examples' => $examples,
-            'theme' => $theme,
-            'difficulty' => $difficulty,
+        $themeEntity = $themeRepository->findOneBy(['name' => $theme]);
+        $form = $this->createForm(ExerciseType::class, null, [
+            'theme_id' => $themeEntity->getId(),
+            'theme_name' => $themeEntity->getName()
         ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $minValue = $data['min_value'];
+            $maxValue = $data['max_value'];
+            $numberOfExamples = $data['number_of_examples'];
+            $difficulty = $data['difficulty'];
+
+            $this->generator = $this->createGenerator($theme);
+            $examples = $this->generator->generate($minValue, $maxValue, $numberOfExamples, $difficulty);
+
+            return $this->render('exercise/exercise.html.twig', [
+                'examples' => $examples,
+                'theme' => $theme,
+                'difficulty' => $difficulty,
+            ]);
+        }
+
+        return $this->redirectToRoute('app_exercise', ['id' => $themeEntity->getId()]);
     }
 
     #[Route('/solve', name: 'app_solve', methods: 'POST')]
     public function solve(Request $request): JsonResponse
     {
-        $csrfToken = $request->request->get('_csrf_token');
-        if (!$this->csrfTokenManager->isTokenValid(new CsrfToken('solve', $csrfToken))) {
-            return $this->json(['error' => 'Neplatný CSRF token.'], 403);
-        }
-
         $equation = $request->request->get('equation', '');
         $difficulty = $request->request->get('difficulty', '');
         $theme = $request->request->get('theme', '');

@@ -3,35 +3,11 @@
 {% block title %}Hello ExcerciseController!{% endblock %}
 
 {% block body %}
-    <div class="exercise-form" style="margin-top: 40px">
-        <form method="get" action="{{ path('app_exercise_test', {theme: theme.name}) }}">
-            <label for="min_value">Minimální hodnota:</label>
-            <input type="number" id="min_value" name="min_value" min="1" max="100" required>
+    <h1>{{ theme.name }}</h1>
 
-            <label for="max_value">Maximální hodnota:</label>
-            <input type="number" id="max_value" name="max_value" min="1" max="100" required>
-
-            <label for="number_of_examples">Počet příkladů:</label>
-            <input type="number" id="number_of_examples" name="number_of_examples" min="1" max="20" required>
-
-            <label for="difficulty">Náročnost:</label>
-            <select id="difficulty" name="difficulty">
-                {% if theme.id == 10 %}
-                    <option value="square">Čtverec</option>
-                    <option value="rectangle">Obdelník</option>
-                    <option value="triangle">Trojúhelník</option>
-                    <option value="circle">kruh</option>
-                {% else %}
-                    <option value="easy">Jednoduchá</option>
-                    <option value="medium">Střední</option>
-                    <option value="hard">Těžká</option>
-                {% endif %}
-            </select>
-
-            <label for="theme">Téma</label>
-            <input type="text" id="theme" name="theme" value="{{ theme.name }}" disabled>
-
-            <button class="btn-primary" type="submit">Generovat</button>
-        </form>
+    <div class="form-wrapper">
+        {{ form_start(form, {'action': path('app_exercise_test', {theme: theme.name})}) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
     </div>
 {% endblock %}
