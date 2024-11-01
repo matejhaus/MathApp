@@ -1,0 +1,7 @@
+var/
+.idea/
+vendor/
+tests/
+node_modules/
+.env
+
