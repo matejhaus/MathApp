@@ -25,7 +25,7 @@ RUN composer instal --no-dev --classmap-authoritative
 RUN npm install
 RUN npm run build
 
-RUN rm -rf assets node_modules
+RUN rm -rf node_modules
 
 # === App image
 FROM docker.io/unit:1.33.0-php8.3 AS deploy
