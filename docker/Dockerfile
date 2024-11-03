@@ -31,8 +31,8 @@ RUN rm -rf node_modules
 FROM docker.io/unit:1.33.0-php8.3 AS deploy
 
 # php extensions used during runtime
-RUN apt-get update && apt-get install -y libxml2-dev
-RUN docker-php-ext-install opcache pdo pdo_mysql simplexml dom
+RUN apt-get update && apt-get install -y libxml2-dev sqlite3 mariadb-client
+RUN docker-php-ext-install opcache pdo_mysql
 
 # webserver configuration
 COPY docker/unit-config.json /docker-entrypoint.d/config.json

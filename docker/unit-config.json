@@ -8,8 +8,8 @@
         {
             "match": {
                 "uri": [
-                "*.php",
-                "*.php/*"
+                    "*.php",
+                    "*.php/*"
                 ]
             },
             "action": {
@@ -19,6 +19,9 @@
         {
             "action": {
                 "share": "/opt/app/public$uri",
+                "response_headers": {
+                    "Cache-Control": "public, max-age=1209600"
+                },
                 "fallback": {
                     "pass": "applications/symfony/index"
                 }
