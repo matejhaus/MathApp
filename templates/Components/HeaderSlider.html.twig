@@ -4,4 +4,9 @@
             <div class="slider-item">{{ quote.quote }}</div>
         {% endfor %}
     </div>
+    <div class="slider-dots">
+        {% for quote in quotes %}
+            <span class="slider-dot"></span>
+        {% endfor %}
+    </div>
 </div>

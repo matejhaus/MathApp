@@ -13,6 +13,7 @@
   display: flex;
   width: 100%;
   animation: slide 20s infinite;
+  transition: transform 0.5s ease-in-out;
 }
 
 .slider-item {
@@ -20,11 +21,37 @@
   color: $black;
   font-size: 18px;
   text-align: center;
+  padding: 20px 0;
+  opacity: 0.6;
+  transition: opacity 0.5s ease-in-out;
 }
 
-@keyframes slide {
-  0%, 20% { transform: translateX(0); }
-  25%, 45% { transform: translateX(-100%); }
-  50%, 70% { transform: translateX(-200%); }
-  75%, 100% { transform: translateX(0); }
+.slider-item-active {
+  opacity: 1;
+}
+
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+  gap: 8px;
+}
+
+.slider-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: lighten($black, 50%);
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &.active {
+    background-color: $color-secondary;
+  }
+
+  &:hover {
+    background-color: darken($color-secondary, 10%);
+  }
 }
