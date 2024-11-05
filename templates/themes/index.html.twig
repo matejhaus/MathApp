@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Témata{% endblock %}
+
+{% block banner %}
+    <div class="theme_header">
+        <h1>Témata</h1>
+    </div>
+{% endblock %}
+
+{% block body %}
+    {% include 'Components/ThemesCards.html.twig' with {'themes':themes} %}
+{% endblock %}

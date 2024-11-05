@@ -15,7 +15,7 @@
                         <a href="{{ path('app_statistics') }}" class="{{ app.request.pathinfo starts with path('app_statistics') ? 'active' : '' }}">Statistiky</a>
                     </li>
                     <li>
-                        <a href="" class="{{ app.request.pathinfo == '/tema' ? 'active' : '' }}">Témata</a>
+                        <a href="{{ path('app_themes') }}" class="{{ app.request.pathinfo starts with path('app_themes') ? 'active' : '' }}">Témata</a>
                     </li>
                 </ul>
             </div>
