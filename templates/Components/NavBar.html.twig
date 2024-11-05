@@ -8,9 +8,15 @@
         <div id="nav-menu">
             <div class="menu">
                 <ul>
-                    <li><a href="/">Domů</a></li>
-                    <li><a href="{{ path('app_statistics') }}">Statistiky</a></li>
-                    <li><a href="">Témata</a></li>
+                    <li>
+                        <a href="/" class="{{ app.request.pathinfo == '/' ? 'active' : '' }}">Domů</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_statistics') }}" class="{{ app.request.pathinfo starts with path('app_statistics') ? 'active' : '' }}">Statistiky</a>
+                    </li>
+                    <li>
+                        <a href="" class="{{ app.request.pathinfo == '/tema' ? 'active' : '' }}">Témata</a>
+                    </li>
                 </ul>
             </div>
             <div class="nav-btns-wrapper">
