@@ -11,13 +11,34 @@
   border-radius: 10px;
   text-decoration: none;
   text-align: center;
-  transition: all 0.5s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   max-width: $max-width;
   width: $width;
 
   &:hover {
-    background-color: $color-one;
+    background-color: darken($bg-color, 10%);
+    transform: scale(0.98);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
     cursor: pointer;
+  }
+
+  &:active {
+    transform: scale(0.96);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  &:disabled,
+  &.disabled {
+    background-color: lighten($bg-color, 20%);
+    color: lighten($text-color, 30%);
+    cursor: not-allowed;
+    box-shadow: none;
+
+    &:hover {
+      background-color: lighten($bg-color, 20%);
+      transform: none;
+    }
   }
 }
 
@@ -38,16 +59,14 @@
   border: none;
   color: $black;
   text-decoration: none;
+  transition: color 0.3s ease;
 
   &:hover {
     color: gray;
+    text-decoration: underline;
   }
 }
 
 .disabled {
-  background-color: gray;
-
-  &:hover {
-    background-color: gray;
-  }
+  @extend .disabled;
 }
