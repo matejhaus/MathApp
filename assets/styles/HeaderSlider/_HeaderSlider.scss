@@ -4,7 +4,7 @@
   width: 100%;
   overflow: hidden;
   position: relative;
-  background-color: $background-dark;
+  background-color: $background;
   padding: 80px 0 60px 0;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -17,7 +17,7 @@
 
 .slider-item {
   flex: 1 0 100%;
-  color: $white;
+  color: $black;
   font-size: 18px;
   text-align: center;
 }

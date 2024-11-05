@@ -6,15 +6,16 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: $background-dark;
-  color: $white;
+  background-color: $background;
+  color: $black;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .test {
-  background-color: $background-dark;
-  border: $border-white;
+  background-color: $white;
   padding: 20px 30px;
   border-radius: $border-radius;
+  box-shadow: $box-shadow;
   display: flex;
   position: relative;
   top: -40px;
@@ -139,7 +140,7 @@
 #tooltip {
   display: none;
   position: absolute;
-  background: $background-dark;
+  background: $black;
   color: $white;
   padding: 5px;
   border-radius: $border-radius;
