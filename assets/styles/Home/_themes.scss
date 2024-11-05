@@ -2,6 +2,12 @@
 
 .home_themes {
   display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.themes-wrapper {
+  display: flex;
   flex-wrap: wrap;
   gap: 10px;
 }

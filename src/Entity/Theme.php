@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ThemeRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -21,6 +22,9 @@ class Theme
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
+    #[ORM\Column(type: 'integer', options: ['default' => 1])]
+    #[Assert\Range(min: 1, max: 2)]
+    private int $category = 1;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $content = null;
@@ -66,6 +70,18 @@ class Theme
     public function setContent(?string $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getCategory(): int
+    {
+        return $this->category;
+    }
+
+    public function setCategory(int $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }

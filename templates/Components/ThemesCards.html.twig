@@ -1,14 +1,37 @@
 <div class="home_themes">
-    {% for theme in themes %}
-        <div class="home_theme">
-            <div class="image">
-                {% set iconPath = 'assets/icons/theme-' ~ theme.id ~ '.svg' %}
-                <img class="icon" src="{{ asset(iconPath) }}" alt="{{ theme.name }}">
-            </div>
-            <div>
-                <p class="name">{{ theme.name }}</p>
-                <a href="{{ path('theme_show', { 'id': theme.id }) }}" class="btn-primary">Pokračovat</a>
-            </div>
-        </div>
-    {% endfor %}
+    <h2>První stupeň</h2>
+    <div class="themes-wrapper">
+        {% for theme in themes %}
+            {% if theme.category == 1 %}
+                <div class="home_theme">
+                    <div class="image">
+                        {% set iconPath = 'assets/icons/theme-' ~ theme.id ~ '.svg' %}
+                        <img class="icon" src="{{ asset(iconPath) }}" alt="{{ theme.name }}">
+                    </div>
+                    <div>
+                        <p class="name">{{ theme.name }}</p>
+                        <a href="{{ path('theme_show', { 'id': theme.id }) }}" class="btn-primary">Pokračovat</a>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <h2>Druhý stupeň</h2>
+    <div class="themes-wrapper">
+        {% for theme in themes %}
+            {% if theme.category == 2 %}
+                <div class="home_theme">
+                    <div class="image">
+                        {% set iconPath = 'assets/icons/theme-' ~ theme.id ~ '.svg' %}
+                        <img class="icon" src="{{ asset(iconPath) }}" alt="{{ theme.name }}">
+                    </div>
+                    <div>
+                        <p class="name">{{ theme.name }}</p>
+                        <a href="{{ path('theme_show', { 'id': theme.id }) }}" class="btn-primary">Pokračovat</a>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
 </div>
