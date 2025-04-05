@@ -12,6 +12,7 @@ import './styles/Theme/_theme.scss';
 import './styles/Exercise/_exercise.scss';
 import './styles/Exercise/_exercise-form.scss';
 import './styles/Footer/_footer.scss';
+import './styles/LeaderBoard/_leaderBorad.scss';
 import 'bootstrap';
 import jquery from 'jquery';
 

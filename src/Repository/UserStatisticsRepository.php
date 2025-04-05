@@ -51,4 +51,19 @@ class UserStatisticsRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    public function findTop10ByTheme(int $themeId): array
+    {
+        return $this->createQueryBuilder('s')
+            ->select('u.firstName', 'u.lastName', 's.correctAnswers', 's.totalAttempts', 's.incorrectAnswers')
+            ->join('s.user', 'u')
+            ->where('s.theme = :themeId')
+            ->setParameter('themeId', $themeId)
+            ->orderBy('(s.correctAnswers * 1.0) / NULLIF(s.totalAttempts, 0)', 'DESC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
+
 }

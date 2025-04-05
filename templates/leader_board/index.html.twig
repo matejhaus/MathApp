@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello LeaderBoardController!{% endblock %}
+
+{% block body %}
+    <div class="leaderboard">
+        <h2>Leaderboard</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Pořadí</th>
+                <th>Jméno</th>
+                <th>Správné odpovědi</th>
+                <th>Celkové pokusy</th>
+                <th>Chybné odpovědi</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for loop_index, stat in themeStats %}
+                <tr class="{% if loop_index == 0 %}gold{% elseif loop_index == 1 %}silver{% elseif loop_index == 2 %}bronze{% endif %}">
+                    <td class="position">{{ loop_index + 1 }}</td>
+                    <td>{{ stat.firstName }} {{ stat.lastName }}</td>
+                    <td>{{ stat.correctAnswers }}</td>
+                    <td>{{ stat.totalAttempts }}</td>
+                    <td>{{ stat.incorrectAnswers }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+
+
+

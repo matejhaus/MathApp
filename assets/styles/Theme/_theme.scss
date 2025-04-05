@@ -20,7 +20,6 @@
   position: relative;
   top: -40px;
   justify-content: center;
-  flex-wrap: wrap;
   margin: 0 auto;
   max-width: 900px;
   gap: 10px;
@@ -32,6 +31,10 @@
 
   img {
     max-width: 20px;
+  }
+
+  @media only screen and (max-width: 840px) {
+    flex-wrap: wrap;
   }
 }
 
