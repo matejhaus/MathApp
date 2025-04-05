@@ -8,6 +8,7 @@ parameters:
 services:
     App\Twig\AppExtension:
         tags: ['twig.extension']
+    App\Utils\ExampleCsvImporter: ~
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.

@@ -1,0 +1,16 @@
+<div class="csv-import">
+    <h2>Import příkladů</h2>
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
+
+    <form action="{{ path('app_admin_example_import') }}" method="post" enctype="multipart/form-data">
+        <label for="csv_file">Vyberte CSV soubor:</label>
+        <input type="file" name="csv_file" id="csv_file" accept=".csv" required>
+        <button type="submit">Importovat</button>
+    </form>
+</div>

@@ -11,14 +11,73 @@ use App\Repository\UserStatisticsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use App\Utils\ExampleCsvImporter;
 
 class AdminController extends AbstractController
 {
     #[Route('/admin', name: 'app_admin')]
-    public function index(): Response
-    {
+    public function index(
+        ThemeRepository $themeRepository,
+        ExampleRepository $exampleRepository,
+        UserRepository $userRepository,
+        QuotesRepository $quotesRepository,
+        UserStatisticsRepository $userStatisticsRepository,
+        UserAttemptsRepository $userAttemptsRepository
+    ): Response {
+        $counts = [
+            [
+                'count' => $exampleRepository->count([]),
+                'name' => 'Příklady',
+                'route' => 'examples'
+            ],
+            [
+                'count' => $themeRepository->count([]),
+                'name' => 'Témata',
+                'route' => 'themes'
+            ],
+            [
+                'count' => $userRepository->count([]),
+                'name' => 'Uživatelé',
+                'route' => 'users'
+            ],
+            [
+                'count' => $quotesRepository->count([]),
+                'name' => 'Citáty',
+                'route' => 'quotes'
+            ],
+            [
+                'count' => $userStatisticsRepository->count([]),
+                'name' => 'Statistiky uživatelů',
+                'route' => 'userStatistics'
+            ],
+            [
+                'count' => $userAttemptsRepository->count([]),
+                'name' => 'Pokusy uživatelů',
+                'route' => 'userAttempts'
+            ]
+        ];
+
         return $this->render('admin/index.html.twig', [
+            'counts' => $counts
         ]);
+    }
+
+
+    #[Route('/admin/example-import', name: 'app_admin_example_import')]
+    public function exampleImport(Request $request, ExampleCsvImporter $exampleCsvImporter): Response
+    {
+        if ($request->isMethod('POST') && $request->files->get('csv_file')) {
+            $file = $request->files->get('csv_file');
+            try {
+                $exampleCsvImporter->importCsvFile($file);
+                $this->addFlash('success', 'CSV soubor byl úspěšně importován.');
+            } catch (\Exception $e) {
+                $this->addFlash('error', 'Chyba při importu souboru: ' . $e->getMessage());
+            }
+        }
+
+        return $this->redirectToRoute('app_admin');
     }
 
     #[Route('/admin/entity/{entity}/{sortBy}/{sortOrder}', name: 'app_admin_entity', defaults: ['sortBy' => 'id', 'sortOrder' => 'ASC'])]
