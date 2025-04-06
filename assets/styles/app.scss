@@ -12,6 +12,10 @@ body {
   flex: 1;
 }
 
+.hidden {
+  display: none;
+}
+
 .container {
   max-width: 1440px;
   margin: auto;

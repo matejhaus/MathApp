@@ -1,3 +1,5 @@
+import './passwordForm'
+import './styles/Test/_passwordModal.scss'
 document.addEventListener('DOMContentLoaded', function () {
     const practiseLink = document.querySelector('.practise-link');
     const tooltip = document.getElementById('tooltip');

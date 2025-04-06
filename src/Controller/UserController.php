@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Grade;
 use App\Entity\User;
 use App\Entity\UserAttempts;
 use App\Entity\UserStatistics;
+use App\Form\GradeType;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -95,6 +97,52 @@ class UserController extends AbstractController
         return $this->render('admin/delete.html.twig', [
             'data' => $user,
             'entity' => 'users',
+        ]);
+    }
+
+    #[Route('admin/grades/add', name: 'add_grades')]
+    public function addGrade(Request $request): Response
+    {
+        $grade = new Grade();
+        $form = $this->createForm(GradeType::class, $grade);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->persist($grade);
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute('app_admin_entity', ['entity' => 'grades']);
+        }
+
+        return $this->render('admin/add.html.twig', [
+            'form' => $form->createView(),
+            'entity' => 'grades',
+        ]);
+    }
+
+    #[Route('admin/grades/edit/{id}', name: 'edit_grades')]
+    public function editGrade(Request $request, User $user): Response
+    {
+        $grades = $this->entityManager->getRepository(Grade::class)->findBy(['user' => $user]);
+
+        $forms = [];
+
+        foreach ($grades as $grade) {
+            $form = $this->createForm(GradeType::class, $grade);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->entityManager->flush();
+                $this->addFlash('success', 'Známky byly úspěšně upraveny.');
+            }
+
+            $forms[] = $form->createView();
+        }
+
+        return $this->render('admin/edit_grades.html.twig', [
+            'user' => $user,
+            'forms' => $forms,
         ]);
     }
 }

@@ -19,17 +19,30 @@
             <img class="icon" src="{{ asset('assets/icons/practise.svg') }}">Procvičování
         </a>
         <a class="btn-primary test-link{% if examplesCount < 5 %} disabled{% endif %}"
-           href="{{ examplesCount >= 5 ? path('test_show', { 'id': theme.id }) : '#' }}"
+           href="javascript:void(0);"
+           id="openPasswordModalButton"
            data-tooltip="{% if examplesCount < 5 %}Test momentálně není dostupný.{% endif %}"
-           data-examples="{{ examplesCount }}">
+           data-examples="{{ examplesCount }}"
+           data-id-theme="{{ theme.id }}">
             <img class="icon" src="{{ asset('assets/icons/exam.svg') }}">Test
         </a>
         <a class="btn-primary" href="{{ path('leader_board', { 'id': theme.id }) }}"><img class="icon" src="{{ asset('assets/icons/back.svg') }}">Žebříček</a>
     </div>
 
     <div id="tooltip"></div>
+    <div class="theme-content-wrapper">
+        {% for block in blocks %}
+            <div class="theme-content">{{ block.content|raw }}</div>
+        {% endfor %}
+    </div>
 
-    <div class="theme-content">{{ theme.content|raw }}</div>
+    <div id="passwordModal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="passwordFormContainer">
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 

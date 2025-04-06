@@ -1,0 +1,39 @@
+{# templates/theme/edit_blocks.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Úprava bloků pro téma: {{ theme.name }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="my-4">Úprava bloků pro téma: {{ theme.name }}</h1>
+
+        <a href="{{ path('add_blocks', {'themeId': theme.id}) }}" class="btn btn-primary mt-3">Přidat nový block</a>
+
+        {# Zobrazit každý formulář pro bloky #}
+        <h3>Existující bloky</h3>
+        {% for form in forms %}
+            {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+            <div class="form-group">
+                {{ form_label(form.content) }}
+                {{ form_widget(form.content, {'attr': {'class': 'form-control', 'rows': 5}}) }}
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Uložit změny</button>
+            </div>
+
+            {# Tlačítko pro odstranění bloku #}
+            <div class="form-group">
+                <form action="{{ path('edit_blocks', {'id': theme.id}) }}" method="post" style="display:inline;">
+                    <input type="hidden" name="delete_block_id" value="{{ form.vars.value.id }}" />
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Opravdu chcete tento blok smazat?')">Odebrat blok</button>
+                </form>
+            </div>
+
+            {{ form_end(form) }}
+        {% endfor %}
+
+        <a href="{{ path('theme_show', {'id': theme.id}) }}" class="btn btn-secondary my-3">Zpět na téma</a>
+    </div>
+{% endblock %}

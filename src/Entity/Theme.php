@@ -53,6 +53,16 @@ class Theme
     #[ORM\OneToMany(targetEntity: UserAttempts::class, mappedBy: 'theme')]
     private Collection $userAttempts;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?TestSettings $testSettings = null;
+
+    /**
+     * @var Collection<int, Block>
+     */
+    #[ORM\OneToMany(targetEntity: Block::class, mappedBy: 'theme', orphanRemoval: true)]
+    private Collection $blocks;
+
     public function __construct()
     {
         $this->examples = new ArrayCollection();
@@ -60,6 +70,7 @@ class Theme
         $this->createdAt = new \DateTimeImmutable();
         $this->updatedAt = new \DateTimeImmutable();
         $this->userAttempts = new ArrayCollection();
+        $this->blocks = new ArrayCollection();
     }
 
     public function getContent(): ?string
@@ -232,6 +243,48 @@ class Theme
         if ($this->userAttempts->removeElement($userAttempt)) {
             if ($userAttempt->getTheme() === $this) {
                 $userAttempt->setTheme(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getTestSettings(): ?TestSettings
+    {
+        return $this->testSettings;
+    }
+
+    public function setTestSettings(TestSettings $testSettings): static
+    {
+        $this->testSettings = $testSettings;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Block>
+     */
+    public function getBlocks(): Collection
+    {
+        return $this->blocks;
+    }
+
+    public function addBlock(Block $block): static
+    {
+        if (!$this->blocks->contains($block)) {
+            $this->blocks->add($block);
+            $block->setTheme($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlock(Block $block): static
+    {
+        if ($this->blocks->removeElement($block)) {
+            // set the owning side to null (unless already changed)
+            if ($block->getTheme() === $this) {
+                $block->setTheme(null);
             }
         }
 

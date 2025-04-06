@@ -133,6 +133,15 @@
                         <td class="actions">
                             <a href="{{ path('edit_' ~ entity, {'id': data.id}) }}" class="openDialog" target="_blank">Edit</a>
                             <a href="{{ path('delete_' ~ entity, {'id': data.id}) }}" class="openDialog" target="_blank">Delete</a>
+                            {% if entity == 'themes' and data.testSettings %}
+                                <a href="{{ path('edit_themes_settings', {'id': data.testSettings.id}) }}" class="openDialog" target="_blank">Nastavení</a>
+                            {% endif %}
+                            {% if entity == 'users' %}
+                                <a href="{{ path('edit_grades', {'id': data.id}) }}" class="openDialog" target="_blank">Známky</a>
+                            {% endif %}
+                            {% if entity == 'themes' %}
+                                <a href="{{ path('edit_blocks', {'id': data.id}) }}" class="openDialog" target="_blank">Bloky</a>
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}

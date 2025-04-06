@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+{% block header %}{% endblock %}
+{% block title %}Edit{% endblock %}
+{% block body %}
+    <h1>Známky pro uživatele {{ user.email }}</h1>
+    <a href="{{ path('add_grades', {'userId': user.id}) }}" class="btn btn-primary mt-3">Přidat novou známku</a>
+
+    <form method="POST">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Známka</th>
+                <th>Téma</th>
+                <th>Akce</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for form in forms %}
+                <tr>
+                    <td class="hidden">{{ form_row(form.user) }}</td>
+                    <td>
+                        {{ form_row(form.grade) }}
+                    </td>
+                    <td>{{ form_row(form.theme) }}</td>
+                    <td>
+                        {{ form_row(form._token) }}
+                        <button type="submit" class="btn btn-primary">Upravit</button>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <button type="submit" class="btn btn-primary">Upravit všechny známky</button>
+    </form>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

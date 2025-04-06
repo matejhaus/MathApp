@@ -1,14 +1,19 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\Grade;
+use App\Entity\Theme;
 use App\Entity\UserAttempts;
 use App\Entity\UserStatistics;
+use App\Form\PasswordFormType;
 use App\Repository\ThemeRepository;
 use App\Repository\ExampleRepository;
 use App\Repository\UserAttemptsRepository;
 use App\Repository\UserStatisticsRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -19,11 +24,44 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 class TestController extends AbstractController
 {
     private CsrfTokenManagerInterface $csrfTokenManager;
+    private $entityManager;
 
-    public function __construct(CsrfTokenManagerInterface $csrfTokenManager)
+    public function __construct(CsrfTokenManagerInterface $csrfTokenManager,EntityManagerInterface $entityManager)
     {
         $this->csrfTokenManager = $csrfTokenManager;
+        $this->entityManager = $entityManager;
     }
+
+    #[Route('/theme/test/check-password/{id}', name: 'check_password')]
+    public function checkPassword(Request $request, Theme $theme): Response
+    {
+        $form = $this->createForm(PasswordFormType::class);
+        $form->handleRequest($request);
+        $testSettings = $theme->getTestSettings();
+
+        if (empty($testSettings->getAccessCode())) {
+            return new JsonResponse(['redirect' => $this->generateUrl('test_show', ['id' => $theme->getId()])]);
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $password = $form->get('password')->getData();
+            $testSettings = $theme->getTestSettings();
+            if ($password === $testSettings->getAccessCode()) {
+                return $this->redirectToRoute('test_show', ['id' => $theme->getId()]);
+            } else {
+                $this->addFlash('error', 'Incorrect password. Please try again.');
+            }
+        }
+
+        return new Response(
+            $this->renderView('Components/PasswordModal.html.twig', [
+                'password_form' => $form->createView(),
+                'theme' => $theme
+            ])
+        );
+    }
+
+
     #[Route('/test/{id}', name: 'test_show')]
     public function show(int $id, Request $request, ThemeRepository $themeRepository, ExampleRepository $exampleRepository,
                          UserStatisticsRepository $userStatisticsRepository,UserAttemptsRepository $userAttemptsRepository
@@ -31,15 +69,28 @@ class TestController extends AbstractController
     ): Response
     {
         $theme = $themeRepository->find($id);
+        $testSettings = $theme->getTestSettings();
 
         if (!$theme) {
             throw $this->createNotFoundException('Theme not found');
         }
 
-        $examples = $exampleRepository->findBy(['theme' => $theme]);
+        $examples = $exampleRepository->findBy(
+            ['theme' => $theme],
+            $testSettings->isRandomOrder() ? [] : ['id' => 'ASC'],
+            $testSettings->getNumberOfQuestions()
+        );
+
+        if ($testSettings->isRandomOrder()) {
+            shuffle($examples);
+        }
+
+        $examples = array_slice($examples, 0, $testSettings->getNumberOfQuestions());
+
 
         $results = [];
         $userAnswers = [];
+        $score = [];
 
         $user = $this->getUser();
 
@@ -157,6 +208,37 @@ class TestController extends AbstractController
             }
 
             $entityManager->flush();
+
+            $percentage = ($correctCount + $incorrectCount) > 0
+                ? $correctCount / ($correctCount + $incorrectCount) * 100
+                : 0;
+
+            $grade = 5; // výchozí známka (nejhorší)
+
+            if ($percentage >= $testSettings->getGrade1Percentage()) {
+                $grade = 1;
+            } elseif ($percentage >= $testSettings->getGrade2Percentage()) {
+                $grade = 2;
+            } elseif ($percentage >= $testSettings->getGrade3Percentage()) {
+                $grade = 3;
+            } elseif ($percentage >= $testSettings->getGrade4Percentage()) {
+                $grade = 4;
+            }
+
+            $score = [
+                'correctCount' => $correctCount,
+                'incorrectCount' => $incorrectCount,
+                'percentage' => $percentage,
+                'grade' => $grade,
+            ];
+
+            $gradeToSave = new Grade();
+            $gradeToSave->setGrade($grade);
+            $gradeToSave->setCreatedAt(new \DateTimeImmutable());
+            $gradeToSave->setUser($this->getUser());
+            $gradeToSave->setTheme($theme);
+            $this->entityManager->persist($gradeToSave);
+            $this->entityManager->flush();
         }
 
         return $this->render('test/index.html.twig', [
@@ -164,7 +246,9 @@ class TestController extends AbstractController
             'examples' => $examples,
             'theme' => $theme,
             'results' => $results,
-            'user_answers' => $userAnswers
+            'time' => $testSettings->getTimeLimitInMinutes(),
+            'user_answers' => $userAnswers,
+            'score' => $score
         ]);
     }
 }

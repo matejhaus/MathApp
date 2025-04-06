@@ -10,7 +10,23 @@
 {% endblock %}
 {% block body %}
     <div class="test-form">
-        <form action="{{ path('test_show', { 'id': theme.id }) }}" method="post">
+        <div id="timer">
+            <p>Čas zbývá: <span id="timeLeft"></span></p>
+        </div>
+        {% if score %}
+            <div class="score">
+                <p><strong>Počet správných odpovědí:</strong> {{ score.correctCount }}</p>
+                <p><strong>Počet nesprávných odpovědí:</strong> {{ score.incorrectCount }}</p>
+                <p><strong>Úspěšnost:</strong> {{ score.percentage }}%</p>
+                <p><strong>Známka:</strong> {{ score.grade }}</p>
+                {% if score.grade < 5 %}
+                    <p class="success">Gratulujeme! Test byl úspěšně dokončen.</p>
+                {% else %}
+                    <p class="failure">Bohužel, test nebyl úspěšně dokončen.</p>
+                {% endif %}
+            </div>
+        {% endif %}
+        <form action="{{ path('test_show', { 'id': theme.id }) }}" method="post" id="testForm">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('test_submit') }}">
             <div class="examples">
                 {% for example in examples %}
@@ -37,4 +53,24 @@
             </div>
         </form>
     </div>
+
+    <script>
+        let timeInMinutes = {{ time }};{{ time }}
+        let timeInSeconds = timeInMinutes * 60;
+
+        function updateTimer() {
+            let minutes = Math.floor(timeInSeconds / 60);
+            let seconds = timeInSeconds % 60;
+            document.getElementById("timeLeft").textContent = `${minutes}m ${seconds}s`;
+
+            if (timeInSeconds <= 0) {
+                document.getElementById("testForm").submit();
+            } else {
+                timeInSeconds--;
+                setTimeout(updateTimer, 1000);
+            }
+        }
+
+        updateTimer();
+    </script>
 {% endblock %}

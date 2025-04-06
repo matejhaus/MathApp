@@ -38,12 +38,19 @@
   }
 }
 
+.theme-content-wrapper {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}
+
 .theme-content {
   max-width: 900px;
   margin: 0 auto;
   padding: 20px 30px;
   background-color: $background;
   border-radius: $border-radius;
+  box-shadow: $box-shadow;
 
   body {
     line-height: 1.6;
